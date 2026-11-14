@@ -3,7 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>K3Soft-Hard</title>
+  <title>K3Soft-Hard — Peter</title>
+  <meta name="description" content="Full-time bug creator and part-time bug fixer. Android apps, single-file web tools, and hardware scripts by Peter (@K3Soft-Hard).">
+  <meta name="theme-color" content="#111113">
+  <link rel="icon" href="https://github.com/K3Soft-Hard.png" type="image/png">
+  <meta property="og:title" content="K3Soft-Hard — Peter">
+  <meta property="og:description" content="Android apps, single-file web tools, and hardware scripts.">
+  <meta property="og:image" content="https://github.com/K3Soft-Hard.png">
+  <meta property="og:type" content="website">
+
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -39,13 +47,110 @@
       font-family: 'JetBrains Mono', monospace;
     }
 
+    /* Slightly longer, smooth engineering animations */
+    @keyframes fadeSlideUp {
+      from {
+        opacity: 0;
+        transform: translateY(12px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes modalBackdropIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes modalPanelIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px) scale(0.97);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    @keyframes popMenuIn {
+      from {
+        opacity: 0;
+        transform: translateY(-6px) scale(0.96);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    @keyframes errorShake {
+      0%, 100% { transform: translateX(0); }
+      20% { transform: translateX(-6px); }
+      40% { transform: translateX(6px); }
+      60% { transform: translateX(-4px); }
+      80% { transform: translateX(4px); }
+    }
+
+    @keyframes statusPing {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.45; transform: scale(1.25); }
+    }
+
+    .view-enter {
+      animation: fadeSlideUp 0.36s cubic-bezier(0.22, 1, 0.36, 1) both;
+    }
+
+    .card-stagger {
+      animation: fadeSlideUp 0.38s cubic-bezier(0.22, 1, 0.36, 1) both;
+    }
+
+    .modal-backdrop {
+      animation: modalBackdropIn 0.24s ease-out both;
+    }
+
+    .modal-panel {
+      animation: modalPanelIn 0.28s cubic-bezier(0.22, 1, 0.36, 1) both;
+    }
+
+    .popup-panel {
+      transform-origin: top right;
+      animation: popMenuIn 0.22s cubic-bezier(0.22, 1, 0.36, 1) both;
+    }
+
+    .error-shake {
+      animation: errorShake 0.36s ease-in-out;
+    }
+
+    .live-dot {
+      animation: statusPing 2.6s ease-in-out infinite;
+    }
+
     .surface-card {
       background-color: var(--bg-surface);
       border: 1px solid var(--border-subtle);
-      transition: border-color 0.15s ease, background-color 0.15s ease;
+      transition: border-color 0.22s ease, background-color 0.22s ease, transform 0.22s cubic-bezier(0.22, 1, 0.36, 1);
     }
 
     .surface-card:hover {
+      background-color: var(--bg-elevated);
+      border-color: var(--border-strong);
+      transform: translateY(-2px);
+    }
+
+    .surface-card:active {
+      transform: translateY(0) scale(0.992);
+    }
+
+    .surface-card-static {
+      background-color: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      transition: border-color 0.22s ease, background-color 0.22s ease;
+    }
+
+    .surface-card-static:hover {
       background-color: var(--bg-elevated);
       border-color: var(--border-strong);
     }
@@ -58,12 +163,16 @@
       background-color: var(--bg-surface);
       border: 1px solid var(--border-subtle);
       color: #a1a1aa;
-      transition: all 0.15s ease;
+      transition: border-color 0.2s ease, color 0.2s ease, background-color 0.2s ease, transform 0.16s ease;
     }
 
     .pill-btn:hover {
       border-color: var(--border-strong);
       color: #f4f4f5;
+    }
+
+    .pill-btn:active {
+      transform: scale(0.97);
     }
 
     .pill-btn.active {
@@ -76,7 +185,7 @@
       background-color: var(--bg-surface);
       border: 1px solid var(--border-subtle);
       color: #f4f4f5;
-      transition: border-color 0.15s ease;
+      transition: border-color 0.2s ease;
     }
 
     .input-clean:focus {
@@ -84,6 +193,24 @@
       border-color: var(--accent);
     }
 
+    @media (prefers-reduced-motion: reduce) {
+      .view-enter,
+      .card-stagger,
+      .modal-backdrop,
+      .modal-panel,
+      .popup-panel,
+      .error-shake,
+      .live-dot {
+        animation: none !important;
+      }
+      .surface-card,
+      .pill-btn {
+        transition: none !important;
+        transform: none !important;
+      }
+    }
+
+    /* Markdown preview styles */
     .readme-body h1, .readme-body h2, .readme-body h3, .readme-body h4 {
       color: #ffffff;
       font-weight: 700;
@@ -105,19 +232,43 @@
       font-size: 0.8rem;
       color: #e4e4e7;
     }
+    .code-block-wrap {
+      position: relative;
+      margin-bottom: 1rem;
+    }
     .readme-body pre {
       background: #0d0d0f;
       border: 1px solid var(--border-subtle);
       border-radius: 8px;
       padding: 0.9rem;
+      padding-right: 4rem;
       overflow-x: auto;
-      margin-bottom: 1rem;
+      margin: 0;
     }
     .readme-body pre code {
       background: transparent;
       border: none;
       padding: 0;
       color: #e4e4e7;
+    }
+    .code-copy-btn {
+      position: absolute;
+      top: 0.55rem;
+      right: 0.55rem;
+      background: #18181b;
+      border: 1px solid #3f3f46;
+      color: #a1a1aa;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      padding: 0.2rem 0.5rem;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: border-color 0.18s ease, color 0.18s ease, background-color 0.18s ease;
+    }
+    .code-copy-btn:hover {
+      background: #27272a;
+      border-color: #52525b;
+      color: #ffffff;
     }
     .readme-body ul, .readme-body ol {
       color: #d4d4d8;
@@ -195,16 +346,16 @@
     }
   </style>
 </head>
-<body class="flex flex-col min-h-screen">
+<body class="flex flex-col min-h-screen pt-14">
 
-  <!-- TOP NAVIGATION -->
-  <header class="sticky top-0 z-30 bg-[#111113]/95 border-b border-[#27272a]">
-    <div class="max-w-5xl mx-auto px-4 sm:px-6 h-15 py-3 flex items-center justify-between">
+  <!-- PINNED TOP NAVIGATION -->
+  <header class="fixed top-0 left-0 right-0 z-30 bg-[#111113]/95 backdrop-blur-sm border-b border-[#27272a]">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between">
       <button onclick="navigateTo('home')" class="flex items-center gap-2.5 text-left group cursor-pointer">
         <img
           src="https://github.com/K3Soft-Hard.png"
           alt="K3Soft-Hard"
-          class="w-7 h-7 rounded-md border border-[#27272a] bg-[#18181b] object-cover"
+          class="w-7 h-7 rounded-md border border-[#27272a] bg-[#18181b] object-cover transition-transform duration-200 group-hover:scale-105"
         />
         <span class="font-semibold text-sm tracking-tight text-zinc-100 group-hover:text-white transition">
           K3Soft-Hard
@@ -213,17 +364,21 @@
 
       <!-- DESKTOP NAV -->
       <nav class="hidden md:flex items-center gap-1.5">
-        <button id="nav-home" onclick="navigateTo('home')" class="px-3 py-1.5 rounded-md text-xs font-medium transition cursor-pointer bg-[#27272a] text-white">
+        <button id="nav-home" onclick="navigateTo('home')" class="px-3 py-1.5 rounded-md text-xs font-medium transition duration-200 cursor-pointer bg-[#27272a] text-white">
           Home
         </button>
-        <button id="nav-repos" onclick="navigateTo('repos', 'ALL')" class="px-3 py-1.5 rounded-md text-xs font-medium transition cursor-pointer text-zinc-400 hover:text-zinc-100">
+        <button id="nav-repos" onclick="navigateTo('repos', 'ALL')" class="px-3 py-1.5 rounded-md text-xs font-medium transition duration-200 cursor-pointer text-zinc-400 hover:text-zinc-100">
           Repositories
         </button>
-        <a href="https://github.com/K3Soft-Hard" target="_blank" rel="noopener noreferrer" class="px-3 py-1.5 rounded-md text-xs font-medium text-zinc-400 hover:text-zinc-100 transition inline-flex items-center gap-1">
-          GitHub
-          <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M7 7h10v10"/></svg>
+        <button id="nav-saved" onclick="navigateTo('saved')" class="px-3 py-1.5 rounded-md text-xs font-medium transition duration-200 cursor-pointer text-zinc-400 hover:text-zinc-100 inline-flex items-center gap-1.5">
+          <span>Saved</span>
+          <span id="nav-saved-count" class="px-1.5 py-0.2 rounded text-[10px] font-mono-code bg-[#202024] border border-[#2e2e34] text-zinc-400">0</span>
+        </button>
+        <a href="https://github.com/K3Soft-Hard" target="_blank" rel="noopener noreferrer" class="px-3 py-1.5 rounded-md text-xs font-medium text-zinc-400 hover:text-zinc-100 transition duration-200 inline-flex items-center gap-1 group">
+          <span>GitHub</span>
+          <svg class="w-3.5 h-3.5 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M7 7h10v10"/></svg>
         </a>
-        <button onclick="triggerLightModeError()" title="Switch theme" aria-label="Switch theme" class="ml-1.5 w-8 h-8 rounded-md border border-[#27272a] bg-[#18181b] hover:border-[#3f3f46] text-zinc-300 hover:text-white flex items-center justify-center transition cursor-pointer">
+        <button onclick="triggerLightModeError()" title="Switch theme" aria-label="Switch theme" class="ml-1.5 w-8 h-8 rounded-md border border-[#27272a] bg-[#18181b] hover:border-[#3f3f46] text-zinc-300 hover:text-white flex items-center justify-center transition duration-200 cursor-pointer active:scale-95">
           <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <circle cx="12" cy="12" r="4"></circle>
             <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path>
@@ -233,7 +388,7 @@
 
       <!-- MOBILE CONTROLS (THEME + HAMBURGER) -->
       <div class="flex md:hidden items-center gap-2">
-        <button onclick="triggerLightModeError()" title="Switch theme" aria-label="Switch theme" class="w-9 h-9 rounded-md border border-[#27272a] bg-[#18181b] hover:border-[#3f3f46] text-zinc-300 hover:text-white flex items-center justify-center transition cursor-pointer">
+        <button onclick="triggerLightModeError()" title="Switch theme" aria-label="Switch theme" class="w-9 h-9 rounded-md border border-[#27272a] bg-[#18181b] hover:border-[#3f3f46] text-zinc-300 hover:text-white flex items-center justify-center transition duration-200 cursor-pointer active:scale-95">
           <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <circle cx="12" cy="12" r="4"></circle>
             <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path>
@@ -244,7 +399,7 @@
           onclick="toggleMobileMenu()"
           aria-label="Open menu"
           aria-expanded="false"
-          class="w-9 h-9 rounded-md border border-[#27272a] bg-[#18181b] hover:border-[#3f3f46] text-zinc-200 flex items-center justify-center transition cursor-pointer"
+          class="w-9 h-9 rounded-md border border-[#27272a] bg-[#18181b] hover:border-[#3f3f46] text-zinc-200 flex items-center justify-center transition duration-200 cursor-pointer active:scale-95"
         >
           <svg id="hamburger-icon" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <line x1="4" y1="7" x2="20" y2="7"></line>
@@ -260,12 +415,16 @@
     </div>
 
     <!-- MOBILE DROPDOWN MENU -->
-    <div id="mobile-menu" class="hidden md:hidden border-t border-[#27272a] bg-[#141417] px-4 py-3 space-y-1">
+    <div id="mobile-menu" class="hidden md:hidden border-t border-[#27272a] bg-[#141417] px-4 py-3 space-y-1 view-enter">
       <button id="m-nav-home" onclick="navigateTo('home')" class="w-full text-left px-3 py-2 rounded-md text-sm font-medium bg-[#27272a] text-white cursor-pointer">
         Home
       </button>
       <button id="m-nav-repos" onclick="navigateTo('repos', 'ALL')" class="w-full text-left px-3 py-2 rounded-md text-sm font-medium text-zinc-400 hover:bg-[#1f1f23] hover:text-white cursor-pointer">
         Repositories
+      </button>
+      <button id="m-nav-saved" onclick="navigateTo('saved')" class="w-full text-left px-3 py-2 rounded-md text-sm font-medium text-zinc-400 hover:bg-[#1f1f23] hover:text-white cursor-pointer flex items-center justify-between">
+        <span>Saved Repositories</span>
+        <span id="m-nav-saved-count" class="px-2 py-0.5 rounded text-xs font-mono-code bg-[#202024] border border-[#2e2e34] text-zinc-400">0</span>
       </button>
       <a href="https://github.com/K3Soft-Hard" target="_blank" rel="noopener noreferrer" class="w-full px-3 py-2 rounded-md text-sm font-medium text-zinc-400 hover:bg-[#1f1f23] hover:text-white flex items-center justify-between">
         <span>GitHub Profile</span>
@@ -275,36 +434,69 @@
   </header>
 
   <!-- MAIN CONTENT -->
-  <main class="flex-1 max-w-5xl w-full mx-auto px-4 sm:px-6 py-10 sm:py-12">
+  <main class="flex-1 max-w-5xl w-full mx-auto px-4 sm:px-6 py-9 sm:py-11">
 
     <!-- VIEW 1: HOME -->
-    <section id="view-home" class="space-y-12">
+    <section id="view-home" class="space-y-9 view-enter">
       <!-- HERO WITH PROFILE PICTURE -->
-      <div class="pt-1 sm:pt-4 flex flex-col-reverse md:grid md:grid-cols-12 gap-6 md:gap-8 items-start md:items-center">
+      <div class="pt-1 sm:pt-2 flex flex-col-reverse md:grid md:grid-cols-12 gap-6 md:gap-8 items-start md:items-center">
         <div class="md:col-span-8 space-y-4">
           <div>
             <h1 class="text-4xl sm:text-5xl font-bold tracking-tight text-white">Peter</h1>
-            <p class="text-xs font-mono-code text-zinc-400 mt-1">@K3Soft-Hard</p>
+            <div class="mt-1.5 flex flex-wrap items-center gap-2 text-xs font-mono-code text-zinc-400">
+              <button
+                id="copy-handle-btn"
+                type="button"
+                onclick="copyProfileHandle()"
+                title="Copy my GitHub profile URL"
+                class="text-zinc-300 hover:text-white transition duration-200 cursor-pointer inline-flex items-center gap-1"
+              >
+                <span id="copy-handle-label">@K3Soft-Hard</span>
+              </button>
+              <span class="text-zinc-600">•</span>
+              <span id="hero-telemetry-stars">— stars</span>
+            </div>
           </div>
 
           <p class="text-zinc-300 text-base sm:text-lg leading-relaxed max-w-xl">
             I am full-time bug creator and a part-time bug fixer. I also build Android apps, single-file web tools, and hardware scripts.
           </p>
 
-          <div class="pt-2 flex flex-wrap items-center gap-2.5">
-            <button onclick="navigateTo('repos', 'ALL')" class="px-4 py-2 rounded-lg bg-[#3b82f6] hover:bg-[#2563eb] text-white text-xs font-semibold transition cursor-pointer inline-flex items-center gap-2">
+          <div class="pt-1 flex flex-wrap items-center gap-2.5">
+            <button onclick="navigateTo('repos', 'ALL')" class="px-4 py-2 rounded-lg bg-[#3b82f6] hover:bg-[#2563eb] active:scale-[0.98] text-white text-xs font-semibold transition duration-200 cursor-pointer inline-flex items-center gap-2 group">
               <span>Browse All Repositories</span>
-              <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              <svg class="w-3.5 h-3.5 transition-transform duration-200 group-hover:translate-x-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
             </button>
-            <a href="https://github.com/K3Soft-Hard" target="_blank" rel="noopener noreferrer" class="px-4 py-2 rounded-lg border border-[#27272a] bg-[#18181b] hover:border-[#3f3f46] text-zinc-200 text-xs font-semibold transition inline-flex items-center gap-2">
+            <a href="https://github.com/K3Soft-Hard" target="_blank" rel="noopener noreferrer" class="px-3.5 py-2 rounded-lg border border-[#27272a] bg-[#18181b] hover:border-[#3f3f46] active:scale-[0.98] text-zinc-200 text-xs font-semibold transition duration-200 inline-flex items-center gap-2 group">
               <span>github.com/K3Soft-Hard</span>
+              <svg class="w-3.5 h-3.5 text-zinc-400 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M7 7h10v10"/></svg>
             </a>
+            <button
+              type="button"
+              onclick="navigateTo('saved')"
+              class="px-3.5 py-2 rounded-lg border border-[#27272a] bg-[#18181b] hover:border-[#3f3f46] active:scale-[0.98] text-zinc-200 text-xs font-semibold transition duration-200 cursor-pointer inline-flex items-center gap-2 group"
+            >
+              <svg class="w-3.5 h-3.5 text-[#60a5fa] transition-transform duration-200 group-hover:scale-110" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
+              </svg>
+              <span>Saved Repos</span>
+              <span id="home-shortcut-saved-count" class="px-1.5 py-0.2 rounded bg-[#202024] border border-[#2e2e34] text-[10px] font-mono-code text-zinc-400">0</span>
+            </button>
+            <button
+              type="button"
+              onclick="jumpToRepoSearch()"
+              class="px-3 py-2 rounded-lg border border-[#27272a] bg-[#18181b] hover:border-[#3f3f46] text-zinc-400 hover:text-zinc-200 text-xs font-mono-code transition duration-200 cursor-pointer inline-flex items-center gap-1.5"
+            >
+              <svg class="w-3.5 h-3.5 text-zinc-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+              <span>Search</span>
+              <kbd class="px-1.5 py-0.2 rounded bg-[#202024] border border-[#2e2e34] text-[10px] text-zinc-400">/</kbd>
+            </button>
           </div>
         </div>
 
         <!-- PROFILE PICTURE -->
         <div class="md:col-span-4 flex justify-start md:justify-end">
-          <div class="w-28 h-28 sm:w-44 sm:h-44 rounded-xl border border-[#27272a] bg-[#18181b] p-1.5 overflow-hidden">
+          <div class="w-28 h-28 sm:w-44 sm:h-44 rounded-xl border border-[#27272a] bg-[#18181b] p-1.5 overflow-hidden transition-colors duration-300 hover:border-[#3f3f46]">
             <img
               id="hero-avatar"
               src="https://github.com/K3Soft-Hard.png"
@@ -316,61 +508,67 @@
       </div>
 
       <!-- 5 MAIN STACK CATEGORY BOXES -->
-      <div class="space-y-4">
+      <div class="space-y-3.5">
         <div class="flex items-center justify-between">
           <h2 class="text-xs font-mono-code uppercase tracking-wider text-zinc-400">Repositories by Stack</h2>
-          <span id="home-total-count" class="text-xs font-mono-code text-zinc-500">Loading...</span>
+          <div class="flex items-center gap-2 text-xs font-mono-code text-zinc-500">
+            <span id="cache-status-badge" class="hidden px-1.5 py-0.5 rounded bg-[#18181b] border border-[#27272a] text-[10px] text-zinc-400">cached</span>
+            <span id="home-total-count">Loading...</span>
+          </div>
         </div>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3.5">
           <!-- KOTLIN BOX -->
-          <button onclick="navigateTo('repos', 'KOTLIN')" class="surface-card category-box rounded-xl p-5 text-left flex flex-col justify-between gap-5 cursor-pointer group">
+          <button onclick="navigateTo('repos', 'KOTLIN')" class="surface-card category-box card-stagger rounded-xl p-5 text-left flex flex-col justify-between gap-4 cursor-pointer group" style="animation-delay: 30ms;">
             <div class="flex items-start justify-between">
-              <div class="w-10 h-10 rounded-lg bg-[#202024] border border-[#2e2e34] flex items-center justify-center text-emerald-400">
+              <div class="w-10 h-10 rounded-lg bg-[#202024] border border-[#2e2e34] flex items-center justify-center text-emerald-400 transition-transform duration-200 group-hover:scale-105">
                 <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
                   <path d="M17.523 15.3414C16.9684 15.3414 16.5186 14.8916 16.5186 14.337C16.5186 13.7824 16.9684 13.3326 17.523 13.3326C18.0776 13.3326 18.5274 13.7824 18.5274 14.337C18.5274 14.8916 18.0776 15.3414 17.523 15.3414ZM6.477 15.3414C5.9224 15.3414 5.4726 14.8916 5.4726 14.337C5.4726 13.7824 5.9224 13.3326 6.477 13.3326C7.0316 13.3326 7.4814 13.7824 7.4814 14.337C7.4814 14.8916 7.0316 15.3414 6.477 15.3414ZM17.882 9.2994L19.893 5.8164C20.005 5.6224 19.939 5.3744 19.745 5.2624C19.551 5.1504 19.303 5.2164 19.191 5.4104L17.155 8.9364C15.637 8.2444 13.882 7.8554 12 7.8554C10.118 7.8554 8.363 8.2444 6.845 8.9364L4.809 5.4104C4.697 5.2164 4.449 5.1504 4.255 5.2624C4.061 5.3744 3.995 5.6224 4.107 5.8164L6.118 9.2994C2.695 11.1584 0.382 14.6394 0 18.7494H24C23.618 14.6394 21.305 11.1584 17.882 9.2994Z"/>
                 </svg>
               </div>
               <span id="count-kotlin" class="text-xs font-mono-code px-2 py-0.5 rounded bg-[#202024] border border-[#2e2e34] text-zinc-400">—</span>
             </div>
-            <div>
+            <div class="space-y-1">
               <h3 class="text-base font-bold text-zinc-100 group-hover:text-white transition">Kotlin</h3>
-              <p class="text-xs text-zinc-400 mt-1">Native Android & Wear OS apps</p>
+              <p class="text-xs text-zinc-400">Native Android & Wear OS apps</p>
+              <p id="latest-kotlin" class="text-[11px] font-mono-code text-zinc-500 truncate pt-1">latest: —</p>
             </div>
           </button>
 
           <!-- TYPESCRIPT BOX -->
-          <button onclick="navigateTo('repos', 'TYPESCRIPT')" class="surface-card category-box rounded-xl p-5 text-left flex flex-col justify-between gap-5 cursor-pointer group">
+          <button onclick="navigateTo('repos', 'TYPESCRIPT')" class="surface-card category-box card-stagger rounded-xl p-5 text-left flex flex-col justify-between gap-4 cursor-pointer group" style="animation-delay: 80ms;">
             <div class="flex items-start justify-between">
-              <div class="w-10 h-10 rounded-lg bg-[#202024] border border-[#2e2e34] flex items-center justify-center text-[#60a5fa] font-mono-code font-bold text-xs tracking-tight">
+              <div class="w-10 h-10 rounded-lg bg-[#202024] border border-[#2e2e34] flex items-center justify-center text-[#60a5fa] font-mono-code font-bold text-xs tracking-tight transition-transform duration-200 group-hover:scale-105">
                 TS
               </div>
               <span id="count-typescript" class="text-xs font-mono-code px-2 py-0.5 rounded bg-[#202024] border border-[#2e2e34] text-zinc-400">—</span>
             </div>
-            <div>
+            <div class="space-y-1">
               <h3 class="text-base font-bold text-zinc-100 group-hover:text-white transition">TypeScript</h3>
-              <p class="text-xs text-zinc-400 mt-1">Typed web apps, clients & tooling</p>
+              <p class="text-xs text-zinc-400">Typed web apps, clients & tooling</p>
+              <p id="latest-typescript" class="text-[11px] font-mono-code text-zinc-500 truncate pt-1">latest: —</p>
             </div>
           </button>
 
           <!-- HTML BOX -->
-          <button onclick="navigateTo('repos', 'HTML')" class="surface-card category-box rounded-xl p-5 text-left flex flex-col justify-between gap-5 cursor-pointer group">
+          <button onclick="navigateTo('repos', 'HTML')" class="surface-card category-box card-stagger rounded-xl p-5 text-left flex flex-col justify-between gap-4 cursor-pointer group" style="animation-delay: 130ms;">
             <div class="flex items-start justify-between">
-              <div class="w-10 h-10 rounded-lg bg-[#202024] border border-[#2e2e34] flex items-center justify-center text-orange-400 font-mono-code font-bold text-[11px] tracking-tighter">
+              <div class="w-10 h-10 rounded-lg bg-[#202024] border border-[#2e2e34] flex items-center justify-center text-orange-400 font-mono-code font-bold text-[11px] tracking-tighter transition-transform duration-200 group-hover:scale-105">
                 HTML
               </div>
               <span id="count-html" class="text-xs font-mono-code px-2 py-0.5 rounded bg-[#202024] border border-[#2e2e34] text-zinc-400">—</span>
             </div>
-            <div>
+            <div class="space-y-1">
               <h3 class="text-base font-bold text-zinc-100 group-hover:text-white transition">HTML</h3>
-              <p class="text-xs text-zinc-400 mt-1">Single-file pages & dashboards</p>
+              <p class="text-xs text-zinc-400">Single-file pages & dashboards</p>
+              <p id="latest-html" class="text-[11px] font-mono-code text-zinc-500 truncate pt-1">latest: —</p>
             </div>
           </button>
 
           <!-- PYTHON BOX -->
-          <button onclick="navigateTo('repos', 'PYTHON')" class="surface-card category-box rounded-xl p-5 text-left flex flex-col justify-between gap-5 cursor-pointer group">
+          <button onclick="navigateTo('repos', 'PYTHON')" class="surface-card category-box card-stagger rounded-xl p-5 text-left flex flex-col justify-between gap-4 cursor-pointer group" style="animation-delay: 180ms;">
             <div class="flex items-start justify-between">
-              <div class="w-10 h-10 rounded-lg bg-[#202024] border border-[#2e2e34] flex items-center justify-center text-sky-400">
+              <div class="w-10 h-10 rounded-lg bg-[#202024] border border-[#2e2e34] flex items-center justify-center text-sky-400 transition-transform duration-200 group-hover:scale-105">
                 <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
                   <path d="M11.914 0C5.82 0 6.2 2.656 6.2 2.656l.007 2.752h5.814v.826H3.9S0 5.789 0 11.969c0 6.18 3.403 5.96 3.403 5.96h2.03v-2.867s-.109-3.42 3.35-3.42h5.766s3.24.052 3.24-3.148V3.202S18.28 0 11.914 0zM8.708 1.85a1.046 1.046 0 1 1 0 2.093 1.046 1.046 0 0 1 0-2.093z"/>
                   <path d="M12.086 24c6.094 0 5.714-2.656 5.714-2.656l-.007-2.752h-5.814v-.826h8.121S24 18.211 24 12.031c0-6.18-3.403-5.96-3.403-5.96h-2.03v2.867s.109 3.42-3.35 3.42H9.451s-3.24-.052-3.24 3.148v5.292S5.72 24 12.086 24zm3.206-1.85a1.046 1.046 0 1 1 0-2.093 1.046 1.046 0 0 1 0 2.093z"/>
@@ -378,16 +576,17 @@
               </div>
               <span id="count-python" class="text-xs font-mono-code px-2 py-0.5 rounded bg-[#202024] border border-[#2e2e34] text-zinc-400">—</span>
             </div>
-            <div>
+            <div class="space-y-1">
               <h3 class="text-base font-bold text-zinc-100 group-hover:text-white transition">Python</h3>
-              <p class="text-xs text-zinc-400 mt-1">Automation, AI & desktop utilities</p>
+              <p class="text-xs text-zinc-400">Automation, AI & desktop utilities</p>
+              <p id="latest-python" class="text-[11px] font-mono-code text-zinc-500 truncate pt-1">latest: —</p>
             </div>
           </button>
 
           <!-- OTHER BOX -->
-          <button onclick="navigateTo('repos', 'OTHER')" class="surface-card category-box rounded-xl p-5 text-left flex flex-col justify-between gap-5 cursor-pointer group">
+          <button onclick="navigateTo('repos', 'OTHER')" class="surface-card category-box card-stagger rounded-xl p-5 text-left flex flex-col justify-between gap-4 cursor-pointer group" style="animation-delay: 230ms;">
             <div class="flex items-start justify-between">
-              <div class="w-10 h-10 rounded-lg bg-[#202024] border border-[#2e2e34] flex items-center justify-center text-zinc-300">
+              <div class="w-10 h-10 rounded-lg bg-[#202024] border border-[#2e2e34] flex items-center justify-center text-zinc-300 transition-transform duration-200 group-hover:scale-105">
                 <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                   <polyline points="4 17 10 11 4 5"></polyline>
                   <line x1="12" y1="19" x2="20" y2="19"></line>
@@ -395,46 +594,81 @@
               </div>
               <span id="count-other" class="text-xs font-mono-code px-2 py-0.5 rounded bg-[#202024] border border-[#2e2e34] text-zinc-400">—</span>
             </div>
-            <div>
+            <div class="space-y-1">
               <h3 class="text-base font-bold text-zinc-100 group-hover:text-white transition">Other</h3>
-              <p class="text-xs text-zinc-400 mt-1">JS, C++, firmware & scripts</p>
+              <p class="text-xs text-zinc-400">JS, C++, firmware & scripts</p>
+              <p id="latest-other" class="text-[11px] font-mono-code text-zinc-500 truncate pt-1">latest: —</p>
             </div>
           </button>
         </div>
       </div>
 
-      <!-- LARGER REPORT A BUG BOX AT BOTTOM -->
-      <div class="pt-1">
-        <div class="surface-card rounded-xl p-6 sm:p-7 flex flex-col sm:flex-row sm:items-center justify-between gap-5">
+      <!-- COMPACT RECENTLY UPDATED + LATEST PUSH -->
+      <div id="home-featured-section" class="surface-card-static rounded-xl p-4 sm:p-5 space-y-3 card-stagger" style="animation-delay: 260ms;">
+        <div class="flex items-center justify-between">
+          <h2 id="home-featured-heading" class="text-xs font-mono-code uppercase tracking-wider text-zinc-400">Recently Updated</h2>
+          <button onclick="navigateTo('repos', 'ALL')" class="text-xs font-mono-code text-zinc-400 hover:text-white transition duration-200 cursor-pointer inline-flex items-center gap-1 group">
+            <span>View all</span>
+            <svg class="w-3 h-3 transition-transform duration-200 group-hover:translate-x-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </button>
+        </div>
+
+        <!-- LATEST PUSH INSIDE RECENTLY UPDATED -->
+        <div id="latest-activity-bar" class="hidden rounded-lg bg-[#111113] border border-[#27272a] px-3 py-2 flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 text-[11px] font-mono-code">
+          <div class="flex items-center gap-2 min-w-0">
+            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 live-dot shrink-0"></span>
+            <span class="text-zinc-500 shrink-0">latest push:</span>
+            <span id="latest-commit-msg" class="text-zinc-300 truncate"></span>
+          </div>
+          <div class="flex items-center gap-1.5 shrink-0 pl-3.5 sm:pl-0">
+            <button id="latest-commit-repo-btn" type="button" class="text-[#60a5fa] hover:text-white font-semibold transition duration-200 cursor-pointer"></button>
+            <span class="text-zinc-600">•</span>
+            <span id="latest-commit-time" class="text-zinc-500"></span>
+          </div>
+        </div>
+
+        <!-- COMPACT 2-COLUMN RECENTLY UPDATED ROW -->
+        <div id="home-featured-grid" class="grid grid-cols-1 md:grid-cols-2 gap-2.5">
+          <div class="h-12 rounded-lg bg-[#202024]/60 animate-pulse"></div>
+          <div class="h-12 rounded-lg bg-[#202024]/60 animate-pulse"></div>
+        </div>
+      </div>
+
+      <!-- REPORT A BUG BOX AT BOTTOM -->
+      <div class="pt-1 card-stagger" style="animation-delay: 300ms;">
+        <div class="surface-card-static rounded-xl p-6 sm:p-7 flex flex-col sm:flex-row sm:items-center justify-between gap-5">
           <div class="space-y-1.5 max-w-lg">
             <div class="flex items-center gap-2">
               <span class="w-2 h-2 rounded-full bg-[#3b82f6]"></span>
               <h3 class="text-sm sm:text-base font-bold text-zinc-100">Found a bug on this website?</h3>
             </div>
             <p class="text-xs sm:text-sm text-zinc-400 leading-relaxed">
-              We take code quality seriously. Use our quick 3-step verification flow to submit a report directly from your browser.
+              I take code quality seriously. Use my quick 3-step verification flow to submit a report directly from your browser.
             </p>
           </div>
           <button
             onclick="openBugModal()"
-            class="px-5 py-2.5 rounded-lg bg-[#202024] hover:bg-[#27272a] border border-[#3f3f46] text-zinc-100 text-xs sm:text-sm font-mono-code font-medium transition cursor-pointer shrink-0 inline-flex items-center justify-center gap-2"
+            class="px-5 py-2.5 rounded-lg bg-[#202024] hover:bg-[#27272a] border border-[#3f3f46] active:scale-[0.98] text-zinc-100 text-xs sm:text-sm font-mono-code font-medium transition duration-200 cursor-pointer shrink-0 inline-flex items-center justify-center gap-2 group"
           >
             <span>Report a bug</span>
-            <svg class="w-4 h-4 text-zinc-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            <svg class="w-4 h-4 text-zinc-400 transition-transform duration-200 group-hover:translate-x-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
           </button>
         </div>
       </div>
     </section>
 
     <!-- VIEW 2: REPOSITORIES -->
-    <section id="view-repos" class="hidden space-y-6">
+    <section id="view-repos" class="hidden space-y-6 view-enter">
       <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[#27272a] pb-5">
         <div class="space-y-1">
-          <button onclick="navigateTo('home')" class="text-xs font-mono-code text-zinc-400 hover:text-white inline-flex items-center gap-1 cursor-pointer mb-1 transition">
-            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+          <button onclick="navigateTo('home')" class="text-xs font-mono-code text-zinc-400 hover:text-white inline-flex items-center gap-1 cursor-pointer mb-1 transition duration-200 group">
+            <svg class="w-3.5 h-3.5 transition-transform duration-200 group-hover:-translate-x-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
             Back to Home
           </button>
-          <h2 class="text-2xl sm:text-3xl font-bold text-white tracking-tight">Repositories</h2>
+          <div class="flex items-baseline gap-3">
+            <h2 class="text-2xl sm:text-3xl font-bold text-white tracking-tight">Repositories</h2>
+            <span id="repo-filter-count" class="text-xs font-mono-code text-zinc-500"></span>
+          </div>
         </div>
 
         <div class="flex flex-wrap items-center gap-2">
@@ -458,27 +692,27 @@
               onclick="handleForksButtonClick(event)"
               class="input-clean hover:border-[#3f3f46] rounded-lg px-3 py-2 text-xs text-zinc-300 inline-flex items-center gap-2 cursor-pointer select-none"
             >
-              <span id="forks-indicator" class="w-2 h-2 rounded-full bg-zinc-500 transition-colors"></span>
+              <span id="forks-indicator" class="w-2 h-2 rounded-full bg-zinc-500 transition-colors duration-200"></span>
               <span id="forks-btn-label">Show forks</span>
             </button>
 
             <!-- SMALL POPUP -->
             <div
               id="forks-popup"
-              class="hidden absolute right-0 mt-2 w-60 rounded-xl bg-[#18181b] border border-[#3f3f46] shadow-2xl p-3 space-y-2 z-30"
+              class="hidden popup-panel absolute right-0 mt-2 w-60 rounded-xl bg-[#18181b] border border-[#3f3f46] shadow-2xl p-3 space-y-2 z-30"
             >
               <p class="text-[11px] font-mono-code text-zinc-400 px-1">Which forks do you mean?</p>
               <button
                 type="button"
                 onclick="selectGithubForks()"
-                class="w-full text-left px-3 py-2 rounded-lg bg-[#3b82f6] hover:bg-[#2563eb] text-white text-xs font-semibold transition cursor-pointer"
+                class="w-full text-left px-3 py-2 rounded-lg bg-[#3b82f6] hover:bg-[#2563eb] text-white text-xs font-semibold transition duration-200 cursor-pointer"
               >
                 I want to see GitHub forks
               </button>
               <button
                 type="button"
                 onclick="selectRealForks()"
-                class="w-full text-left px-3 py-2 rounded-lg bg-[#202024] hover:bg-[#27272a] border border-[#3f3f46] text-zinc-200 text-xs font-medium transition cursor-pointer"
+                class="w-full text-left px-3 py-2 rounded-lg bg-[#202024] hover:bg-[#27272a] border border-[#3f3f46] text-zinc-200 text-xs font-medium transition duration-200 cursor-pointer"
               >
                 I want to see real forks
               </button>
@@ -494,6 +728,36 @@
       <div id="repo-grid" class="grid grid-cols-1 md:grid-cols-2 gap-3.5"></div>
     </section>
 
+    <!-- VIEW 3: SAVED REPOSITORIES -->
+    <section id="view-saved" class="hidden space-y-6 view-enter">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[#27272a] pb-5">
+        <div class="space-y-1">
+          <button onclick="navigateTo('home')" class="text-xs font-mono-code text-zinc-400 hover:text-white inline-flex items-center gap-1 cursor-pointer mb-1 transition duration-200 group">
+            <svg class="w-3.5 h-3.5 transition-transform duration-200 group-hover:-translate-x-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+            Back to Home
+          </button>
+          <div class="flex items-baseline gap-3">
+            <h2 class="text-2xl sm:text-3xl font-bold text-white tracking-tight">Saved Repositories</h2>
+            <span id="saved-total-count" class="text-xs font-mono-code text-zinc-500"></span>
+          </div>
+          <p class="text-xs text-zinc-400">Your bookmarked repositories, sorted from newest updated to oldest.</p>
+        </div>
+
+        <div class="flex flex-wrap items-center gap-2">
+          <button
+            type="button"
+            onclick="openSaveModal()"
+            class="px-4 py-2 rounded-lg bg-[#3b82f6] hover:bg-[#2563eb] active:scale-[0.98] text-white text-xs font-semibold transition duration-200 cursor-pointer inline-flex items-center gap-1.5"
+          >
+            <span>+ Save repo</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- SAVED LIST -->
+      <div id="saved-grid" class="grid grid-cols-1 md:grid-cols-2 gap-3.5"></div>
+    </section>
+
   </main>
 
   <!-- FOOTER -->
@@ -501,31 +765,112 @@
     <div class="max-w-5xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-zinc-500 font-mono-code">
       <span>K3Soft-Hard</span>
       <div class="flex items-center gap-5">
-        <button onclick="navigateTo('home')" class="hover:text-zinc-200 transition cursor-pointer">Home</button>
-        <button onclick="navigateTo('repos', 'ALL')" class="hover:text-zinc-200 transition cursor-pointer">Repositories</button>
-        <a href="https://github.com/K3Soft-Hard" target="_blank" rel="noopener noreferrer" class="hover:text-zinc-200 transition">GitHub</a>
+        <button onclick="navigateTo('home')" class="hover:text-zinc-200 transition duration-200 cursor-pointer">Home</button>
+        <button onclick="navigateTo('repos', 'ALL')" class="hover:text-zinc-200 transition duration-200 cursor-pointer">Repositories</button>
+        <button onclick="navigateTo('saved')" class="hover:text-zinc-200 transition duration-200 cursor-pointer">Saved</button>
+        <a href="https://github.com/K3Soft-Hard" target="_blank" rel="noopener noreferrer" class="hover:text-zinc-200 transition duration-200">GitHub</a>
       </div>
     </div>
   </footer>
 
+  <!-- SAVE REPO MODAL -->
+  <div id="save-modal" onclick="if(event.target === this) closeSaveModal()" class="fixed inset-0 z-40 hidden modal-backdrop bg-black/75 flex items-center justify-center p-4">
+    <div class="modal-panel bg-[#18181b] border border-[#3f3f46] rounded-xl max-w-md w-full p-6 space-y-4 shadow-2xl">
+      <div class="flex items-center justify-between">
+        <div>
+          <h3 class="text-base font-bold text-white">Save a Repository</h3>
+          <p class="text-xs text-zinc-400 mt-0.5">Select a repository to add to your Saved list.</p>
+        </div>
+        <button onclick="closeSaveModal()" class="w-7 h-7 rounded-md border border-[#27272a] hover:border-[#3f3f46] text-zinc-400 hover:text-white flex items-center justify-center text-xs transition duration-200 cursor-pointer">
+          ✕
+        </button>
+      </div>
+
+      <div class="space-y-3">
+        <div class="space-y-1.5">
+          <label for="save-repo-select" class="block text-xs font-mono-code text-zinc-300">Repository</label>
+          <select id="save-repo-select" class="input-clean w-full rounded-lg px-3 py-2 text-xs font-mono-code cursor-pointer"></select>
+        </div>
+      </div>
+
+      <div class="pt-2 flex items-center justify-end gap-2">
+        <button type="button" onclick="closeSaveModal()" class="px-3.5 py-2 rounded-lg border border-[#27272a] bg-[#202024] hover:border-[#3f3f46] text-zinc-300 text-xs font-medium transition duration-200 cursor-pointer">
+          Cancel
+        </button>
+        <button type="button" onclick="saveSelectedRepoFromModal()" class="px-4 py-2 rounded-lg bg-[#3b82f6] hover:bg-[#2563eb] text-white text-xs font-semibold transition duration-200 cursor-pointer">
+          Save
+        </button>
+      </div>
+    </div>
+  </div>
+
   <!-- README MODAL -->
-  <div id="readme-modal" onclick="if(event.target === this) closeReadmeModal()" class="fixed inset-0 z-40 hidden bg-black/75 flex items-center justify-center p-4">
-    <div class="bg-[#18181b] border border-[#3f3f46] rounded-xl max-w-3xl w-full max-h-[85vh] flex flex-col overflow-hidden">
-      <div class="px-5 py-4 border-b border-[#27272a] flex items-center justify-between gap-4">
+  <div id="readme-modal" onclick="if(event.target === this) closeReadmeModal()" class="fixed inset-0 z-40 hidden modal-backdrop bg-black/75 flex items-center justify-center p-4">
+    <div class="modal-panel bg-[#18181b] border border-[#3f3f46] rounded-xl max-w-3xl w-full max-h-[85vh] flex flex-col overflow-hidden">
+      <div class="px-5 py-4 border-b border-[#27272a] flex flex-wrap items-center justify-between gap-3">
         <div class="min-w-0">
           <h3 id="modal-repo-title" class="text-base font-bold text-white truncate">Repository</h3>
           <p id="modal-repo-sub" class="text-xs font-mono-code text-zinc-400 truncate">README.md</p>
         </div>
-        <div class="flex items-center gap-2 shrink-0">
-          <a id="modal-website-btn" href="#" target="_blank" rel="noopener noreferrer" class="hidden px-3 py-1.5 rounded-md border border-[#3f3f46] bg-[#202024] hover:bg-[#27272a] text-zinc-100 text-xs font-semibold transition inline-flex items-center gap-1">
+        <div class="flex flex-wrap items-center gap-2 shrink-0">
+          <button
+            id="modal-save-btn"
+            type="button"
+            onclick="toggleSaveCurrentRepo()"
+            title="Save or unsave this repository"
+            class="px-3 py-1.5 rounded-md border border-[#3f3f46] bg-[#202024] hover:bg-[#27272a] text-zinc-200 hover:text-white text-xs font-semibold transition duration-200 inline-flex items-center gap-1.5 cursor-pointer"
+          >
+            <svg id="modal-save-icon" class="w-3.5 h-3.5 text-[#60a5fa]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
+            </svg>
+            <span id="modal-save-label">Save</span>
+          </button>
+          <button
+            id="modal-clone-btn"
+            type="button"
+            onclick="copyCurrentRepoClone()"
+            title="Copy git clone command"
+            class="px-3 py-1.5 rounded-md border border-[#3f3f46] bg-[#202024] hover:bg-[#27272a] text-zinc-200 hover:text-white text-xs font-mono-code font-medium transition duration-200 inline-flex items-center gap-1.5 cursor-pointer"
+          >
+            <svg class="w-3.5 h-3.5 text-zinc-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="4 17 10 11 4 5"></polyline>
+              <line x1="12" y1="19" x2="20" y2="19"></line>
+            </svg>
+            <span id="modal-clone-label">Clone</span>
+          </button>
+          <button
+            id="modal-share-btn"
+            type="button"
+            onclick="shareCurrentRepo()"
+            title="Copy direct link to this repository preview"
+            class="px-3 py-1.5 rounded-md border border-[#3f3f46] bg-[#202024] hover:bg-[#27272a] text-zinc-200 hover:text-white text-xs font-semibold transition duration-200 inline-flex items-center gap-1.5 cursor-pointer"
+          >
+            <svg id="modal-share-icon" class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="18" cy="5" r="3"></circle>
+              <circle cx="6" cy="12" r="3"></circle>
+              <circle cx="18" cy="19" r="3"></circle>
+              <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+              <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+            </svg>
+            <span id="modal-share-label">Share</span>
+          </button>
+          <a id="modal-download-btn" href="#" target="_blank" rel="noopener noreferrer" class="hidden px-3 py-1.5 rounded-md border border-[#3f3f46] bg-[#202024] hover:bg-[#27272a] text-emerald-400 hover:text-emerald-300 text-xs font-semibold transition duration-200 inline-flex items-center gap-1.5 group">
+            <svg class="w-3.5 h-3.5 transition-transform duration-200 group-hover:translate-y-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+              <polyline points="7 10 12 15 17 10"/>
+              <line x1="12" y1="15" x2="12" y2="3"/>
+            </svg>
+            <span id="modal-download-label">Download</span>
+          </a>
+          <a id="modal-website-btn" href="#" target="_blank" rel="noopener noreferrer" class="hidden px-3 py-1.5 rounded-md border border-[#3f3f46] bg-[#202024] hover:bg-[#27272a] text-zinc-100 text-xs font-semibold transition duration-200 inline-flex items-center gap-1 group">
             <span>Open Website</span>
-            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M7 7h10v10"/></svg>
+            <svg class="w-3.5 h-3.5 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M7 7h10v10"/></svg>
           </a>
-          <a id="modal-open-btn" href="#" target="_blank" rel="noopener noreferrer" class="px-3 py-1.5 rounded-md bg-[#3b82f6] hover:bg-[#2563eb] text-white text-xs font-semibold transition inline-flex items-center gap-1">
+          <a id="modal-open-btn" href="#" target="_blank" rel="noopener noreferrer" class="px-3 py-1.5 rounded-md bg-[#3b82f6] hover:bg-[#2563eb] text-white text-xs font-semibold transition duration-200 inline-flex items-center gap-1 group">
             <span>Open</span>
-            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M7 7h10v10"/></svg>
+            <svg class="w-3.5 h-3.5 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M7 7h10v10"/></svg>
           </a>
-          <button onclick="closeReadmeModal()" class="w-8 h-8 rounded-md border border-[#27272a] hover:border-[#3f3f46] text-zinc-400 hover:text-white flex items-center justify-center cursor-pointer">
+          <button onclick="closeReadmeModal()" class="w-8 h-8 rounded-md border border-[#27272a] hover:border-[#3f3f46] text-zinc-400 hover:text-white flex items-center justify-center transition duration-200 cursor-pointer">
             ✕
           </button>
         </div>
@@ -535,17 +880,17 @@
   </div>
 
   <!-- REPORT BUG EASTER EGG MODAL -->
-  <div id="bug-modal" onclick="if(event.target === this) closeBugModal()" class="fixed inset-0 z-40 hidden bg-black/75 flex items-center justify-center p-4">
-    <div class="bg-[#18181b] border border-[#3f3f46] rounded-xl max-w-md w-full p-6 space-y-4 relative z-10 shadow-2xl">
+  <div id="bug-modal" onclick="if(event.target === this) closeBugModal()" class="fixed inset-0 z-40 hidden modal-backdrop bg-black/75 flex items-center justify-center p-4">
+    <div class="modal-panel bg-[#18181b] border border-[#3f3f46] rounded-xl max-w-md w-full p-6 space-y-4 relative z-10 shadow-2xl">
       <div class="flex items-center justify-between">
         <h3 class="text-base font-bold text-white">Easy 3-Step Bug Report</h3>
-        <button onclick="closeBugModal()" class="w-7 h-7 rounded-md border border-[#27272a] hover:border-[#3f3f46] text-zinc-400 hover:text-white flex items-center justify-center text-xs cursor-pointer">
+        <button onclick="closeBugModal()" class="w-7 h-7 rounded-md border border-[#27272a] hover:border-[#3f3f46] text-zinc-400 hover:text-white flex items-center justify-center text-xs transition duration-200 cursor-pointer">
           ✕
         </button>
       </div>
 
       <p class="text-xs text-zinc-400 leading-relaxed">
-        To keep our issue tracker spam-free, reporting a bug is super simple:
+        To keep my issue tracker spam-free, reporting a bug is super simple:
       </p>
 
       <ol class="text-xs text-zinc-300 space-y-2.5 list-decimal pl-4 leading-relaxed">
@@ -557,27 +902,27 @@
       <div id="bug-console-feedback" class="hidden rounded-lg border border-[#27272a] bg-[#111113] p-3 text-xs font-mono-code text-emerald-400"></div>
 
       <div class="pt-1 flex justify-end">
-        <button onclick="closeBugModal()" class="px-4 py-2 rounded-lg bg-[#3b82f6] hover:bg-[#2563eb] text-white text-xs font-semibold transition cursor-pointer">
+        <button onclick="closeBugModal()" class="px-4 py-2 rounded-lg bg-[#3b82f6] hover:bg-[#2563eb] text-white text-xs font-semibold transition duration-200 cursor-pointer">
           Got it
         </button>
       </div>
     </div>
 
-    <!-- HIDDEN GRAY CORNER TEXT THAT COPIES THE COMMAND ON CLICK -->
+    <!-- HIDDEN GRAY CORNER TEXT THAT COPIES THE COMMAND ON CLICK (NO ANIMATIONS) -->
     <button
       id="hidden-bug-cheat"
       type="button"
       onclick="copyBugCommand(event)"
       title="Click to copy command"
-      class="fixed bottom-3 right-3 text-[10px] font-mono-code text-[#27272a] hover:text-[#52525b] transition-colors cursor-pointer select-none z-50 text-right max-w-[90vw] truncate"
+      class="fixed bottom-3 right-3 text-[10px] font-mono-code text-[#27272a] hover:text-[#52525b] cursor-pointer select-none z-50 text-right max-w-[90vw] truncate"
     >
       reportBug("141592653589793238462643383279718281828459045235360287471352")
     </button>
   </div>
 
   <!-- COMPACT FULLSCREEN LIGHT MODE ERROR -->
-  <div id="light-error-overlay" class="fixed inset-0 z-50 hidden bg-[#111113]/95 flex items-center justify-center p-5">
-    <div class="max-w-sm w-full bg-[#18181b] border border-red-500/40 rounded-xl p-6 text-center space-y-4 shadow-2xl">
+  <div id="light-error-overlay" class="fixed inset-0 z-50 hidden modal-backdrop bg-[#111113]/95 flex items-center justify-center p-5">
+    <div id="light-error-card" class="modal-panel max-w-sm w-full bg-[#18181b] border border-red-500/40 rounded-xl p-6 text-center space-y-4 shadow-2xl">
       <div class="w-10 h-10 rounded-lg bg-red-500/10 border border-red-500/30 text-red-400 flex items-center justify-center mx-auto font-mono-code font-bold text-sm">
         !
       </div>
@@ -587,7 +932,7 @@
           Cannot switch to Light Mode. Bright pixels attract bugs straight into the code.
         </p>
       </div>
-      <button onclick="closeLightModeError()" class="w-full py-2.5 rounded-lg bg-[#3b82f6] hover:bg-[#2563eb] text-white text-xs font-semibold transition cursor-pointer">
+      <button onclick="closeLightModeError()" class="w-full py-2.5 rounded-lg bg-[#3b82f6] hover:bg-[#2563eb] text-white text-xs font-semibold transition duration-200 cursor-pointer">
         Stay in Dark Mode
       </button>
     </div>
@@ -597,7 +942,8 @@
        Supported formats per repo:
        - "RepoName": "kotlin" | "typescript" | "html" | "python" | "other" | "hide"
        - "RepoName": "html|https://example.com"  (category/tag + website URL)
-       - "RepoName": { "category": "python", "tag": "CLI", "website": "https://example.com", "hide": false }
+       - "RepoName": "kotlin|pinned"             (pins repo to Recently Updated box)
+       - "RepoName": { "category": "python", "tag": "CLI", "website": "https://example.com", "pinned": true, "hide": false }
   -->
   <script id="repo-overrides" type="application/json">
   {
@@ -609,8 +955,12 @@
 
   <script>
     const GITHUB_USERNAME = "K3Soft-Hard";
+    const CACHE_KEY_REPOS = `k3_repos_${GITHUB_USERNAME}_v2`;
+    const CACHE_KEY_EVENTS = `k3_events_${GITHUB_USERNAME}_v1`;
+    const CACHE_KEY_RELEASES = `k3_releases_${GITHUB_USERNAME}_v2`;
+    const STORAGE_KEY_SAVED = `k3_saved_repos_${GITHUB_USERNAME}_v1`;
+    const CACHE_TTL_MS = 5 * 60 * 1000;
 
-    // Reads the simple JSON block above
     function loadRepoOverrides() {
       try {
         const el = document.getElementById("repo-overrides");
@@ -650,18 +1000,7 @@
     function copyBugCommand(event) {
       event.stopPropagation();
       const el = document.getElementById("hidden-bug-cheat");
-      navigator.clipboard.writeText(FULL_BUG_COMMAND).then(() => {
-        el.textContent = "copied to clipboard";
-        setTimeout(() => {
-          el.textContent = FULL_BUG_COMMAND;
-        }, 1400);
-      }).catch(() => {
-        const ta = document.createElement("textarea");
-        ta.value = FULL_BUG_COMMAND;
-        document.body.appendChild(ta);
-        ta.select();
-        document.execCommand("copy");
-        document.body.removeChild(ta);
+      copyTextToClipboard(FULL_BUG_COMMAND).then(() => {
         el.textContent = "copied to clipboard";
         setTimeout(() => {
           el.textContent = FULL_BUG_COMMAND;
@@ -669,10 +1008,353 @@
       });
     }
 
+    function copyTextToClipboard(text) {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        return navigator.clipboard.writeText(text).catch(() => fallbackCopyText(text));
+      }
+      return fallbackCopyText(text);
+    }
+
+    function fallbackCopyText(text) {
+      return new Promise((resolve) => {
+        const ta = document.createElement("textarea");
+        ta.value = text;
+        ta.style.position = "fixed";
+        ta.style.opacity = "0";
+        document.body.appendChild(ta);
+        ta.select();
+        try {
+          document.execCommand("copy");
+        } catch {}
+        document.body.removeChild(ta);
+        resolve();
+      });
+    }
+
     let allRepos = [];
+    let currentView = "home";
     let currentFilter = "ALL";
+    let savedRepoNames = loadSavedRepos();
     let showForksEnabled = false;
     let mobileMenuOpen = false;
+    let isSyncingHash = false;
+    let shareFeedbackTimer = null;
+    let cloneFeedbackTimer = null;
+    let handleFeedbackTimer = null;
+
+    function loadSavedRepos() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY_SAVED);
+        const parsed = raw ? JSON.parse(raw) : [];
+        return Array.isArray(parsed) ? parsed.filter(item => typeof item === "string") : [];
+      } catch {
+        return [];
+      }
+    }
+
+    function persistSavedRepos() {
+      try {
+        localStorage.setItem(STORAGE_KEY_SAVED, JSON.stringify(savedRepoNames));
+      } catch {}
+    }
+
+    function isRepoSaved(rawName) {
+      return savedRepoNames.some(name => name.toLowerCase() === String(rawName).toLowerCase());
+    }
+
+    function toggleSaveRepo(rawName, event = null) {
+      if (event) event.stopPropagation();
+      const targetLower = String(rawName).toLowerCase();
+      const liveRepo = allRepos.find(r => r.rawName.toLowerCase() === targetLower);
+      const canonicalName = liveRepo ? liveRepo.rawName : rawName;
+
+      if (isRepoSaved(canonicalName)) {
+        savedRepoNames = savedRepoNames.filter(n => n.toLowerCase() !== targetLower);
+      } else {
+        savedRepoNames.push(canonicalName);
+      }
+
+      persistSavedRepos();
+      updateSavedCounters();
+      renderSavedView();
+      renderRepos();
+
+      const modal = document.getElementById("readme-modal");
+      if (modal && !modal.classList.contains("hidden") && modal.dataset.activeRepo?.toLowerCase() === targetLower) {
+        updateModalSaveButtonUI(canonicalName);
+      }
+    }
+
+    function updateSavedCounters() {
+      const count = savedRepoNames.length;
+      const navCount = document.getElementById("nav-saved-count");
+      const mNavCount = document.getElementById("m-nav-saved-count");
+      const homeCount = document.getElementById("home-shortcut-saved-count");
+      const totalLabel = document.getElementById("saved-total-count");
+
+      if (navCount) navCount.textContent = String(count);
+      if (mNavCount) mNavCount.textContent = String(count);
+      if (homeCount) homeCount.textContent = String(count);
+      if (totalLabel) totalLabel.textContent = `(${count})`;
+    }
+
+    function openSaveModal() {
+      const modal = document.getElementById("save-modal");
+      const selectEl = document.getElementById("save-repo-select");
+      if (!modal || !selectEl) return;
+
+      const available = allRepos
+        .filter(r => !r.hidden)
+        .sort((a, b) => new Date(b.pushedAt || b.updatedAt) - new Date(a.pushedAt || a.updatedAt));
+
+      selectEl.innerHTML = available.map(r => {
+        const savedTag = isRepoSaved(r.rawName) ? " (saved)" : "";
+        return `<option value="${escapeHtml(r.rawName)}">${escapeHtml(r.title)} [${escapeHtml(r.language)}]${savedTag}</option>`;
+      }).join("");
+
+      const firstUnsaved = available.find(r => !isRepoSaved(r.rawName));
+      if (firstUnsaved) {
+        selectEl.value = firstUnsaved.rawName;
+      }
+
+      modal.classList.remove("hidden");
+    }
+
+    function closeSaveModal() {
+      document.getElementById("save-modal")?.classList.add("hidden");
+    }
+
+    function saveSelectedRepoFromModal() {
+      const selectEl = document.getElementById("save-repo-select");
+      if (!selectEl || !selectEl.value) return;
+
+      const repoName = selectEl.value;
+      if (!isRepoSaved(repoName)) {
+        savedRepoNames.push(repoName);
+        persistSavedRepos();
+        updateSavedCounters();
+        renderSavedView();
+        renderRepos();
+      }
+      closeSaveModal();
+    }
+
+    function renderSavedView() {
+      const grid = document.getElementById("saved-grid");
+      updateSavedCounters();
+      if (!grid) return;
+
+      if (savedRepoNames.length === 0) {
+        grid.innerHTML = `
+          <div class="col-span-full surface-card-static rounded-xl p-10 text-center space-y-3 view-enter">
+            <p class="text-sm font-semibold text-white">No saved repositories yet</p>
+            <p class="text-xs text-zinc-400">Bookmark any repository from the Repositories page or add one below.</p>
+            <div class="pt-1">
+              <button type="button" onclick="openSaveModal()" class="px-4 py-2 rounded-lg bg-[#3b82f6] hover:bg-[#2563eb] text-white text-xs font-semibold transition duration-200 cursor-pointer">
+                + Save repo
+              </button>
+            </div>
+          </div>
+        `;
+        return;
+      }
+
+      // Resolve saved repos and sort strictly from newest updated to oldest
+      const resolvedSaved = savedRepoNames
+        .map(name => allRepos.find(r => r.rawName.toLowerCase() === name.toLowerCase()) || {
+          rawName: name,
+          title: name,
+          description: "Saved repository",
+          language: "Other",
+          iconKey: "other",
+          category: "OTHER",
+          tag: "",
+          hidden: false,
+          pinned: false,
+          license: "",
+          stars: 0,
+          forks: 0,
+          fork: false,
+          updatedAt: new Date(0).toISOString(),
+          pushedAt: new Date(0).toISOString(),
+          defaultBranch: "main",
+          htmlUrl: `https://github.com/${GITHUB_USERNAME}/${name}`,
+          releasesUrl: `https://github.com/${GITHUB_USERNAME}/${name}/releases`,
+          hasRelease: false,
+          releaseTag: "",
+          websiteUrl: "",
+          forceWebsiteBtn: false
+        })
+        .sort((a, b) => new Date(b.pushedAt || b.updatedAt) - new Date(a.pushedAt || a.updatedAt));
+
+      grid.innerHTML = resolvedSaved.map((repo, idx) => buildRepoCardHtml(repo, idx)).join("");
+    }
+
+    function timeAgo(dateString) {
+      const diffSec = Math.max(1, Math.floor((Date.now() - new Date(dateString).getTime()) / 1000));
+      if (diffSec < 60) return `${diffSec}s ago`;
+      const diffMin = Math.floor(diffSec / 60);
+      if (diffMin < 60) return `${diffMin}m ago`;
+      const diffHr = Math.floor(diffMin / 60);
+      if (diffHr < 24) return `${diffHr}h ago`;
+      const diffDay = Math.floor(diffHr / 24);
+      if (diffDay < 30) return `${diffDay}d ago`;
+      const diffMo = Math.floor(diffDay / 30);
+      if (diffMo < 12) return `${diffMo}mo ago`;
+      return `${Math.floor(diffMo / 12)}y ago`;
+    }
+
+    function copyProfileHandle() {
+      const label = document.getElementById("copy-handle-label");
+      if (!label) return;
+      copyTextToClipboard(`https://github.com/${GITHUB_USERNAME}`).then(() => {
+        label.textContent = "Copied URL";
+        label.className = "text-emerald-400 transition";
+        if (handleFeedbackTimer) clearTimeout(handleFeedbackTimer);
+        handleFeedbackTimer = setTimeout(() => {
+          label.textContent = `@${GITHUB_USERNAME}`;
+          label.className = "";
+        }, 1500);
+      });
+    }
+
+    function jumpToRepoSearch() {
+      navigateTo("repos", "ALL");
+      setTimeout(() => {
+        const input = document.getElementById("repo-search");
+        if (input) input.focus();
+      }, 40);
+    }
+
+    function getRepoShareUrl(repoName) {
+      const url = new URL(window.location.href);
+      url.hash = `repo/${encodeURIComponent(repoName)}`;
+      return url.toString();
+    }
+
+    function setUrlHash(newHash) {
+      const normalized = newHash ? (newHash.startsWith("#") ? newHash : `#${newHash}`) : "";
+      if (window.location.hash === normalized) return;
+      isSyncingHash = true;
+      if (normalized) {
+        history.replaceState(null, "", normalized);
+      } else {
+        history.replaceState(null, "", window.location.pathname + window.location.search);
+      }
+      setTimeout(() => { isSyncingHash = false; }, 0);
+    }
+
+    function resetShareButtonUI() {
+      if (shareFeedbackTimer) {
+        clearTimeout(shareFeedbackTimer);
+        shareFeedbackTimer = null;
+      }
+      const btn = document.getElementById("modal-share-btn");
+      const label = document.getElementById("modal-share-label");
+      const icon = document.getElementById("modal-share-icon");
+      if (!btn || !label || !icon) return;
+
+      btn.className = "px-3 py-1.5 rounded-md border border-[#3f3f46] bg-[#202024] hover:bg-[#27272a] text-zinc-200 hover:text-white text-xs font-semibold transition duration-200 inline-flex items-center gap-1.5 cursor-pointer";
+      label.textContent = "Share";
+      icon.innerHTML = `
+        <circle cx="18" cy="5" r="3"></circle>
+        <circle cx="6" cy="12" r="3"></circle>
+        <circle cx="18" cy="19" r="3"></circle>
+        <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+        <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+      `;
+    }
+
+    function resetCloneButtonUI() {
+      if (cloneFeedbackTimer) {
+        clearTimeout(cloneFeedbackTimer);
+        cloneFeedbackTimer = null;
+      }
+      const btn = document.getElementById("modal-clone-btn");
+      const label = document.getElementById("modal-clone-label");
+      if (!btn || !label) return;
+      btn.className = "px-3 py-1.5 rounded-md border border-[#3f3f46] bg-[#202024] hover:bg-[#27272a] text-zinc-200 hover:text-white text-xs font-mono-code font-medium transition duration-200 inline-flex items-center gap-1.5 cursor-pointer";
+      label.textContent = "Clone";
+    }
+
+    function updateModalSaveButtonUI(rawName) {
+      const btn = document.getElementById("modal-save-btn");
+      const label = document.getElementById("modal-save-label");
+      const icon = document.getElementById("modal-save-icon");
+      if (!btn || !label || !icon) return;
+
+      if (isRepoSaved(rawName)) {
+        btn.className = "px-3 py-1.5 rounded-md border border-[#3b82f6]/50 bg-[#3b82f6]/15 text-[#60a5fa] hover:text-white text-xs font-semibold transition duration-200 inline-flex items-center gap-1.5 cursor-pointer";
+        label.textContent = "Saved";
+        icon.setAttribute("fill", "currentColor");
+      } else {
+        btn.className = "px-3 py-1.5 rounded-md border border-[#3f3f46] bg-[#202024] hover:bg-[#27272a] text-zinc-200 hover:text-white text-xs font-semibold transition duration-200 inline-flex items-center gap-1.5 cursor-pointer";
+        label.textContent = "Save";
+        icon.setAttribute("fill", "none");
+      }
+    }
+
+    function toggleSaveCurrentRepo() {
+      const modal = document.getElementById("readme-modal");
+      const rawName = modal?.dataset?.activeRepo;
+      if (!rawName) return;
+      toggleSaveRepo(rawName);
+    }
+
+    function copyCurrentRepoClone() {
+      const modal = document.getElementById("readme-modal");
+      const rawName = modal?.dataset?.activeRepo;
+      if (!rawName) return;
+
+      const repo = allRepos.find(r => r.rawName === rawName);
+      const cloneCmd = `git clone ${repo ? repo.htmlUrl : `https://github.com/${GITHUB_USERNAME}/${rawName}`}.git`;
+
+      copyTextToClipboard(cloneCmd).then(() => {
+        const btn = document.getElementById("modal-clone-btn");
+        const label = document.getElementById("modal-clone-label");
+        if (!btn || !label) return;
+
+        btn.className = "px-3 py-1.5 rounded-md border border-emerald-500/40 bg-emerald-500/10 text-emerald-400 text-xs font-mono-code font-medium transition duration-200 inline-flex items-center gap-1.5 cursor-pointer";
+        label.textContent = "Copied";
+
+        if (cloneFeedbackTimer) clearTimeout(cloneFeedbackTimer);
+        cloneFeedbackTimer = setTimeout(resetCloneButtonUI, 1600);
+      });
+    }
+
+    function shareCurrentRepo() {
+      const modal = document.getElementById("readme-modal");
+      const rawName = modal?.dataset?.activeRepo;
+      if (!rawName) return;
+
+      const repo = allRepos.find(r => r.rawName === rawName);
+      const shareUrl = getRepoShareUrl(rawName);
+      const shareTitle = repo ? `${repo.title} — K3Soft-Hard` : `${rawName} — K3Soft-Hard`;
+
+      const showCopiedFeedback = () => {
+        const btn = document.getElementById("modal-share-btn");
+        const label = document.getElementById("modal-share-label");
+        const icon = document.getElementById("modal-share-icon");
+        if (!btn || !label || !icon) return;
+
+        btn.className = "px-3 py-1.5 rounded-md border border-emerald-500/40 bg-emerald-500/10 text-emerald-400 text-xs font-semibold transition duration-200 inline-flex items-center gap-1.5 cursor-pointer";
+        label.textContent = "Link copied";
+        icon.innerHTML = `<polyline points="20 6 9 17 4 12"></polyline>`;
+
+        if (shareFeedbackTimer) clearTimeout(shareFeedbackTimer);
+        shareFeedbackTimer = setTimeout(resetShareButtonUI, 1800);
+      };
+
+      copyTextToClipboard(shareUrl).then(showCopiedFeedback);
+
+      if (navigator.share && /Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+        navigator.share({
+          title: shareTitle,
+          text: repo?.description || `Check out ${rawName} on K3Soft-Hard`,
+          url: shareUrl
+        }).catch(() => {});
+      }
+    }
 
     function toggleMobileMenu() {
       mobileMenuOpen = !mobileMenuOpen;
@@ -707,10 +1389,10 @@
       const indicator = document.getElementById("forks-indicator");
       const label = document.getElementById("forks-btn-label");
       if (showForksEnabled) {
-        indicator.className = "w-2 h-2 rounded-full bg-[#3b82f6] transition-colors";
+        indicator.className = "w-2 h-2 rounded-full bg-[#3b82f6] transition-colors duration-200";
         label.textContent = "Showing forks";
       } else {
-        indicator.className = "w-2 h-2 rounded-full bg-zinc-500 transition-colors";
+        indicator.className = "w-2 h-2 rounded-full bg-zinc-500 transition-colors duration-200";
         label.textContent = "Show forks";
       }
     }
@@ -765,9 +1447,13 @@
         const parts = rawOverride.split("|").map(p => p.trim()).filter(Boolean);
         let rule = "";
         let website = "";
+        let pinned = false;
 
         for (const part of parts) {
-          if (/^https?:\/\//i.test(part) || (part.includes(".") && !part.includes(" "))) {
+          const lower = part.toLowerCase();
+          if (lower === "pinned" || lower === "pin" || lower === "featured") {
+            pinned = true;
+          } else if (/^https?:\/\//i.test(part) || (part.includes(".") && !part.includes(" "))) {
             website = part;
           } else if (!rule) {
             rule = part;
@@ -778,6 +1464,7 @@
           rule: rule.toLowerCase(),
           tag: "",
           website: normalizeWebsiteUrl(website),
+          pinned,
           hide: rule.toLowerCase() === "hide" || rule.toLowerCase() === "hidden"
         };
       }
@@ -788,11 +1475,13 @@
         const explicitHide = Boolean(rawOverride.hide || rawOverride.hidden || ruleLower === "hide" || ruleLower === "hidden");
         const websiteVal = normalizeWebsiteUrl(rawOverride.website || rawOverride.url || rawOverride.homepage || "");
         const tagVal = rawOverride.tag !== undefined ? String(rawOverride.tag).trim() : "";
+        const pinnedVal = Boolean(rawOverride.pinned || rawOverride.featured);
 
         return {
           rule: ruleLower,
           tag: tagVal,
           website: websiteVal,
+          pinned: pinnedVal,
           hide: explicitHide
         };
       }
@@ -808,6 +1497,7 @@
       const rawRule = parsedOverride.rule || "";
 
       const hidden = Boolean(parsedOverride.hide);
+      const pinned = Boolean(parsedOverride.pinned);
 
       let category = null;
       let tag = parsedOverride.tag || "";
@@ -859,6 +1549,10 @@
       const websiteUrl = overrideWebsite || githubWebsite;
       const forceWebsiteBtn = Boolean(overrideWebsite);
 
+      const spdxId = repo.license && repo.license.spdx_id && repo.license.spdx_id !== "NOASSERTION"
+        ? repo.license.spdx_id
+        : "";
+
       return {
         rawName: repo.name,
         title: repo.name,
@@ -868,12 +1562,19 @@
         category,
         tag,
         hidden,
+        pinned,
+        license: spdxId,
         stars: repo.stargazers_count || 0,
         forks: repo.forks_count || 0,
+        size: repo.size || 0,
         fork: Boolean(repo.fork),
         updatedAt: repo.updated_at,
+        pushedAt: repo.pushed_at || repo.updated_at,
         defaultBranch: repo.default_branch || "main",
         htmlUrl: repo.html_url,
+        releasesUrl: `${repo.html_url}/releases`,
+        hasRelease: null,
+        releaseTag: "",
         websiteUrl,
         forceWebsiteBtn
       };
@@ -883,12 +1584,16 @@
       return repo.category;
     }
 
+    function isKotlinRepo(repo) {
+      return getCategoryForRepo(repo) === "KOTLIN" || repo.language.toLowerCase() === "kotlin";
+    }
+
     function getLanguageBadge(repo) {
       const key = repo.iconKey;
 
       if (key === "kotlin") {
         return `
-          <div class="w-10 h-10 rounded-lg bg-[#202024] border border-[#2e2e34] flex items-center justify-center text-emerald-400 shrink-0" title="Kotlin / Android">
+          <div class="w-10 h-10 rounded-lg bg-[#202024] border border-[#2e2e34] flex items-center justify-center text-emerald-400 shrink-0 transition-transform duration-200 group-hover:scale-105" title="Kotlin / Android">
             <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
               <path d="M17.523 15.3414C16.9684 15.3414 16.5186 14.8916 16.5186 14.337C16.5186 13.7824 16.9684 13.3326 17.523 13.3326C18.0776 13.3326 18.5274 13.7824 18.5274 14.337C18.5274 14.8916 18.0776 15.3414 17.523 15.3414ZM6.477 15.3414C5.9224 15.3414 5.4726 14.8916 5.4726 14.337C5.4726 13.7824 5.9224 13.3326 6.477 13.3326C7.0316 13.3326 7.4814 13.7824 7.4814 14.337C7.4814 14.8916 7.0316 15.3414 6.477 15.3414ZM17.882 9.2994L19.893 5.8164C20.005 5.6224 19.939 5.3744 19.745 5.2624C19.551 5.1504 19.303 5.2164 19.191 5.4104L17.155 8.9364C15.637 8.2444 13.882 7.8554 12 7.8554C10.118 7.8554 8.363 8.2444 6.845 8.9364L4.809 5.4104C4.697 5.2164 4.449 5.1504 4.255 5.2624C4.061 5.3744 3.995 5.6224 4.107 5.8164L6.118 9.2994C2.695 11.1584 0.382 14.6394 0 18.7494H24C23.618 14.6394 21.305 11.1584 17.882 9.2994Z"/>
             </svg>
@@ -898,7 +1603,7 @@
 
       if (key === "typescript") {
         return `
-          <div class="w-10 h-10 rounded-lg bg-[#202024] border border-[#2e2e34] flex items-center justify-center text-[#60a5fa] font-mono-code font-bold text-xs shrink-0" title="TypeScript">
+          <div class="w-10 h-10 rounded-lg bg-[#202024] border border-[#2e2e34] flex items-center justify-center text-[#60a5fa] font-mono-code font-bold text-xs shrink-0 transition-transform duration-200 group-hover:scale-105" title="TypeScript">
             TS
           </div>
         `;
@@ -906,7 +1611,7 @@
 
       if (key === "html") {
         return `
-          <div class="w-10 h-10 rounded-lg bg-[#202024] border border-[#2e2e34] flex items-center justify-center text-orange-400 font-mono-code font-bold text-[11px] tracking-tighter shrink-0" title="HTML">
+          <div class="w-10 h-10 rounded-lg bg-[#202024] border border-[#2e2e34] flex items-center justify-center text-orange-400 font-mono-code font-bold text-[11px] tracking-tighter shrink-0 transition-transform duration-200 group-hover:scale-105" title="HTML">
             HTML
           </div>
         `;
@@ -914,7 +1619,7 @@
 
       if (key === "javascript") {
         return `
-          <div class="w-10 h-10 rounded-lg bg-[#202024] border border-[#2e2e34] flex items-center justify-center text-yellow-300 font-mono-code font-bold text-xs shrink-0" title="JavaScript">
+          <div class="w-10 h-10 rounded-lg bg-[#202024] border border-[#2e2e34] flex items-center justify-center text-yellow-300 font-mono-code font-bold text-xs shrink-0 transition-transform duration-200 group-hover:scale-105" title="JavaScript">
             JS
           </div>
         `;
@@ -922,10 +1627,10 @@
 
       if (key === "python") {
         return `
-          <div class="w-10 h-10 rounded-lg bg-[#202024] border border-[#2e2e34] flex items-center justify-center text-sky-400 shrink-0" title="Python">
+          <div class="w-10 h-10 rounded-lg bg-[#202024] border border-[#2e2e34] flex items-center justify-center text-sky-400 shrink-0 transition-transform duration-200 group-hover:scale-105" title="Python">
             <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
               <path d="M11.914 0C5.82 0 6.2 2.656 6.2 2.656l.007 2.752h5.814v.826H3.9S0 5.789 0 11.969c0 6.18 3.403 5.96 3.403 5.96h2.03v-2.867s-.109-3.42 3.35-3.42h5.766s3.24.052 3.24-3.148V3.202S18.28 0 11.914 0zM8.708 1.85a1.046 1.046 0 1 1 0 2.093 1.046 1.046 0 0 1 0-2.093z"/>
-              <path d="M12.086 24c6.094 0 5.714-2.656 5.714-2.656l-.007-2.752h-5.814v-.826h8.121S24 18.211 24 12.031c0-6.18-3.403-5.96-3.403-5.96h-2.03v2.867s.109 3.42-3.35 3.42H9.451s-3.24-.052-3.24 3.148v5.292S5.72 24 12.086 24zm3.206-1.85a1.046 1.046 0 1 1 0-2.093 1.046 1.046 0 0 1 0 2.093z"/>
+              <path d="M12.086 24c6.094 0 5.714-2.656 5.714-2.656l-.007-2.752h-5.814v-.826h8.121S24 18.211 24 12.031c0-6.18-3.403-5.96-3.403-5.96h-2.03v2.867s.109 3.42-3.35 3.42H9.451s-3.24-.052-3.24 3.148v5.292S5.72 24 12.086 24zm3.206-1.85a1.046 1.046 0 1 1 0-2.093 1.046 1.046 0 0 1 0-2.093z"/>
             </svg>
           </div>
         `;
@@ -934,7 +1639,7 @@
       if (key === "c++" || key === "c" || key === "cpp" || key === "rust") {
         const label = key === "rust" ? "RS" : (key === "c" ? "C" : "C++");
         return `
-          <div class="w-10 h-10 rounded-lg bg-[#202024] border border-[#2e2e34] flex items-center justify-center text-indigo-300 font-mono-code font-bold text-xs shrink-0" title="${repo.language}">
+          <div class="w-10 h-10 rounded-lg bg-[#202024] border border-[#2e2e34] flex items-center justify-center text-indigo-300 font-mono-code font-bold text-xs shrink-0 transition-transform duration-200 group-hover:scale-105" title="${repo.language}">
             ${label}
           </div>
         `;
@@ -942,14 +1647,14 @@
 
       if (key === "css" || key === "scss") {
         return `
-          <div class="w-10 h-10 rounded-lg bg-[#202024] border border-[#2e2e34] flex items-center justify-center text-cyan-400 font-mono-code font-bold text-[11px] shrink-0" title="CSS">
+          <div class="w-10 h-10 rounded-lg bg-[#202024] border border-[#2e2e34] flex items-center justify-center text-cyan-400 font-mono-code font-bold text-[11px] shrink-0 transition-transform duration-200 group-hover:scale-105" title="CSS">
             CSS
           </div>
         `;
       }
 
       return `
-        <div class="w-10 h-10 rounded-lg bg-[#202024] border border-[#2e2e34] flex items-center justify-center text-zinc-300 shrink-0" title="${repo.language}">
+        <div class="w-10 h-10 rounded-lg bg-[#202024] border border-[#2e2e34] flex items-center justify-center text-zinc-300 shrink-0 transition-transform duration-200 group-hover:scale-105" title="${repo.language}">
           <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <polyline points="16 18 22 12 16 6"></polyline>
             <polyline points="8 6 2 12 8 18"></polyline>
@@ -958,20 +1663,356 @@
       `;
     }
 
-    function updateHomeCounters() {
-      const visiblePublic = allRepos.filter(r => !r.fork && !r.hidden);
-      const kotlinCount = visiblePublic.filter(r => getCategoryForRepo(r) === "KOTLIN").length;
-      const tsCount = visiblePublic.filter(r => getCategoryForRepo(r) === "TYPESCRIPT").length;
-      const htmlCount = visiblePublic.filter(r => getCategoryForRepo(r) === "HTML").length;
-      const pythonCount = visiblePublic.filter(r => getCategoryForRepo(r) === "PYTHON").length;
-      const otherCount = visiblePublic.filter(r => getCategoryForRepo(r) === "OTHER").length;
+    function buildRepoCardHtml(repo, idx = 0) {
+      const updatedDate = new Date(repo.updatedAt).toLocaleDateString("en-US", {
+        year: "numeric",
+        month: "short",
+        day: "numeric"
+      });
 
-      document.getElementById("count-kotlin").textContent = `${kotlinCount} repos`;
-      document.getElementById("count-typescript").textContent = `${tsCount} repos`;
-      document.getElementById("count-html").textContent = `${htmlCount} repos`;
-      document.getElementById("count-python").textContent = `${pythonCount} repos`;
-      document.getElementById("count-other").textContent = `${otherCount} repos`;
-      document.getElementById("home-total-count").textContent = `${visiblePublic.length} public repos`;
+      const isHtmlRepo = getCategoryForRepo(repo) === "HTML" || repo.language.toLowerCase() === "html";
+      const showWebsiteBtn = (isHtmlRepo || repo.forceWebsiteBtn) && Boolean(repo.websiteUrl);
+      const kotlinFlag = isKotlinRepo(repo);
+      const showDownloadBtn = kotlinFlag && repo.hasRelease === true;
+      const saved = isRepoSaved(repo.rawName);
+      const delayMs = Math.min(idx * 40, 360);
+
+      return `
+        <article onclick="openReadmeModal('${repo.rawName.replace(/'/g, "\\'")}')" class="surface-card card-stagger rounded-xl p-5 flex flex-col justify-between gap-4 cursor-pointer group" style="animation-delay: ${delayMs}ms;">
+          <div class="flex items-start gap-3.5">
+            ${getLanguageBadge(repo)}
+            <div class="min-w-0 flex-1">
+              <div class="flex items-center justify-between gap-2">
+                <h3 class="text-base font-bold text-zinc-100 group-hover:text-white transition truncate">
+                  ${escapeHtml(repo.title)}
+                </h3>
+                <div class="flex items-center gap-1.5 shrink-0">
+                  <button
+                    type="button"
+                    onclick="toggleSaveRepo('${repo.rawName.replace(/'/g, "\\'")}', event)"
+                    title="${saved ? "Remove from Saved" : "Save repository"}"
+                    class="w-6 h-6 rounded border ${saved ? "border-[#3b82f6]/50 bg-[#3b82f6]/15 text-[#60a5fa]" : "border-[#27272a] bg-[#202024] text-zinc-400 hover:text-white hover:border-[#3f3f46]"} flex items-center justify-center transition duration-200 cursor-pointer"
+                  >
+                    <svg class="w-3 h-3" viewBox="0 0 24 24" fill="${saved ? "currentColor" : "none"}" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
+                    </svg>
+                  </button>
+                  ${repo.tag ? `<span class="text-[10px] font-mono-code px-2 py-0.5 rounded bg-[#27272a] border border-[#3f3f46] text-zinc-300">${escapeHtml(repo.tag)}</span>` : ""}
+                  ${repo.fork ? `<span class="text-[10px] font-mono-code px-2 py-0.5 rounded bg-[#202024] border border-[#2e2e34] text-zinc-400">Fork</span>` : ""}
+                </div>
+              </div>
+              <p class="text-xs text-zinc-400 mt-1.5 line-clamp-2 leading-relaxed">
+                ${escapeHtml(repo.description)}
+              </p>
+            </div>
+          </div>
+
+          <div class="pt-3 border-t border-[#27272a] flex items-center justify-between gap-2 text-xs font-mono-code text-zinc-400">
+            <div class="flex items-center gap-2.5 min-w-0">
+              <span class="text-zinc-300 truncate">${escapeHtml(repo.language)}</span>
+              <span>★ ${repo.stars}</span>
+              ${repo.license ? `<span class="hidden md:inline text-[11px] px-1.5 py-0.2 rounded bg-[#202024] border border-[#2e2e34] text-zinc-400">${escapeHtml(repo.license)}</span>` : ""}
+              <span class="hidden sm:inline text-zinc-500">${updatedDate}</span>
+            </div>
+
+            <div class="flex items-center gap-3 shrink-0">
+              ${kotlinFlag ? `
+                <a
+                  data-download-repo="${escapeHtml(repo.rawName)}"
+                  href="${repo.releasesUrl}"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onclick="event.stopPropagation()"
+                  class="${showDownloadBtn ? "" : "hidden "}text-zinc-300 hover:text-white font-semibold inline-flex items-center gap-1 transition duration-200 group/dl"
+                >
+                  <span>Download</span>
+                  <svg class="w-3.5 h-3.5 transition-transform duration-200 group-hover/dl:translate-y-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                </a>
+              ` : ""}
+
+              ${showWebsiteBtn ? `
+                <a
+                  href="${repo.websiteUrl}"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onclick="event.stopPropagation()"
+                  class="text-zinc-300 hover:text-white font-semibold inline-flex items-center gap-1 transition duration-200 group/web"
+                >
+                  <span>Open Website</span>
+                  <svg class="w-3.5 h-3.5 transition-transform duration-200 group-hover/web:translate-x-0.5 group-hover/web:-translate-y-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M7 7h10v10"/></svg>
+                </a>
+              ` : ""}
+
+              <a
+                href="${repo.htmlUrl}"
+                target="_blank"
+                rel="noopener noreferrer"
+                onclick="event.stopPropagation()"
+                class="text-[#60a5fa] hover:text-white font-semibold inline-flex items-center gap-1 transition duration-200 group/open"
+              >
+                <span>Open</span>
+                <svg class="w-3.5 h-3.5 transition-transform duration-200 group-hover/open:translate-x-0.5 group-hover/open:-translate-y-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M7 7h10v10"/></svg>
+              </a>
+            </div>
+          </div>
+        </article>
+      `;
+    }
+
+    function animateCounter(el, target, suffix) {
+      if (!el) return;
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches || target === 0) {
+        el.textContent = `${target} ${suffix}`;
+        return;
+      }
+      const duration = 520;
+      const start = performance.now();
+      function step(now) {
+        const progress = Math.min((now - start) / duration, 1);
+        const eased = 1 - Math.pow(1 - progress, 3);
+        const current = Math.round(eased * target);
+        el.textContent = `${current} ${suffix}`;
+        if (progress < 1) requestAnimationFrame(step);
+      }
+      requestAnimationFrame(step);
+    }
+
+    function updateHomeSections() {
+      const visiblePublic = allRepos
+        .filter(r => !r.fork && !r.hidden)
+        .sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt));
+
+      const categories = [
+        { key: "KOTLIN", countId: "count-kotlin", latestId: "latest-kotlin" },
+        { key: "TYPESCRIPT", countId: "count-typescript", latestId: "latest-typescript" },
+        { key: "HTML", countId: "count-html", latestId: "latest-html" },
+        { key: "PYTHON", countId: "count-python", latestId: "latest-python" },
+        { key: "OTHER", countId: "count-other", latestId: "latest-other" }
+      ];
+
+      categories.forEach(cat => {
+        const matching = visiblePublic.filter(r => getCategoryForRepo(r) === cat.key);
+        animateCounter(document.getElementById(cat.countId), matching.length, "repos");
+
+        const latestEl = document.getElementById(cat.latestId);
+        if (latestEl) {
+          latestEl.textContent = matching.length > 0
+            ? `latest: ${matching[0].title}`
+            : "latest: none";
+        }
+      });
+
+      animateCounter(document.getElementById("home-total-count"), visiblePublic.length, "public repos");
+
+      // Hero telemetry
+      const totalStars = visiblePublic.reduce((sum, r) => sum + r.stars, 0);
+      const starsEl = document.getElementById("hero-telemetry-stars");
+      if (starsEl) starsEl.textContent = `${totalStars} ${totalStars === 1 ? "star" : "stars"}`;
+
+      // Compact Recently Updated list on Home
+      const featuredHeading = document.getElementById("home-featured-heading");
+      const featuredGrid = document.getElementById("home-featured-grid");
+
+      const pinnedRepos = visiblePublic.filter(r => r.pinned);
+      const featuredList = pinnedRepos.length > 0
+        ? pinnedRepos.slice(0, 2)
+        : visiblePublic.slice(0, 2);
+
+      if (featuredHeading) {
+        featuredHeading.textContent = pinnedRepos.length > 0 ? "Featured" : "Recently Updated";
+      }
+
+      if (featuredGrid) {
+        if (featuredList.length === 0) {
+          featuredGrid.innerHTML = `<p class="text-xs text-zinc-500">No repositories found.</p>`;
+        } else {
+          featuredGrid.innerHTML = featuredList.map(repo => {
+            const kotlinFlag = isKotlinRepo(repo);
+            const showDownloadBtn = kotlinFlag && repo.hasRelease === true;
+            return `
+              <div
+                onclick="openReadmeModal('${repo.rawName.replace(/'/g, "\\'")}')"
+                class="rounded-lg border border-[#27272a] bg-[#111113] hover:border-[#3f3f46] hover:bg-[#1c1c20] px-3 py-2 flex items-center justify-between gap-2.5 cursor-pointer transition duration-200 group"
+              >
+                <div class="min-w-0 flex-1">
+                  <div class="flex items-center gap-2">
+                    <span class="text-xs font-semibold text-zinc-100 group-hover:text-white truncate">${escapeHtml(repo.title)}</span>
+                    <span class="text-[10px] font-mono-code text-zinc-500 shrink-0">${escapeHtml(repo.language)}</span>
+                  </div>
+                  <p class="text-[11px] text-zinc-400 truncate mt-0.5">${escapeHtml(repo.description)}</p>
+                </div>
+                <div class="flex items-center gap-2.5 shrink-0 text-[11px] font-mono-code">
+                  ${kotlinFlag ? `
+                    <a
+                      data-download-repo="${escapeHtml(repo.rawName)}"
+                      href="${repo.releasesUrl}"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onclick="event.stopPropagation()"
+                      class="${showDownloadBtn ? "" : "hidden "}text-zinc-300 hover:text-white transition duration-200"
+                    >
+                      Download
+                    </a>
+                  ` : ""}
+                  <span class="text-zinc-500">${timeAgo(repo.updatedAt)}</span>
+                </div>
+              </div>
+            `;
+          }).join("");
+        }
+      }
+    }
+
+    async function fetchLatestPushEvent() {
+      const bar = document.getElementById("latest-activity-bar");
+      const msgEl = document.getElementById("latest-commit-msg");
+      const repoBtn = document.getElementById("latest-commit-repo-btn");
+      const timeEl = document.getElementById("latest-commit-time");
+      if (!bar || !msgEl || !repoBtn || !timeEl) return;
+
+      const renderEvent = (pushInfo) => {
+        if (!pushInfo || !pushInfo.repoName) return;
+        const shortRepo = pushInfo.repoName.replace(`${GITHUB_USERNAME}/`, "");
+        const matchedRepo = allRepos.find(r => r.rawName.toLowerCase() === shortRepo.toLowerCase());
+        if (matchedRepo && matchedRepo.hidden) return;
+
+        msgEl.textContent = pushInfo.message ? `"${pushInfo.message}"` : "pushed updates";
+        repoBtn.textContent = shortRepo;
+        timeEl.textContent = timeAgo(pushInfo.createdAt);
+
+        repoBtn.onclick = () => {
+          if (matchedRepo) {
+            openReadmeModal(matchedRepo.rawName);
+          } else {
+            window.open(`https://github.com/${pushInfo.repoName}`, "_blank", "noopener,noreferrer");
+          }
+        };
+
+        bar.classList.remove("hidden");
+      };
+
+      try {
+        const cachedRaw = sessionStorage.getItem(CACHE_KEY_EVENTS);
+        if (cachedRaw) {
+          const cached = JSON.parse(cachedRaw);
+          if (Date.now() - cached.ts < CACHE_TTL_MS && cached.data) {
+            renderEvent(cached.data);
+            return;
+          }
+        }
+      } catch {}
+
+      try {
+        const res = await fetch(`https://api.github.com/users/${GITHUB_USERNAME}/events/public?per_page=15`);
+        if (!res.ok) return;
+        const events = await res.json();
+        if (!Array.isArray(events)) return;
+
+        const pushEvent = events.find(ev => ev.type === "PushEvent" && ev.repo && ev.repo.name);
+        if (!pushEvent) return;
+
+        const commits = pushEvent.payload?.commits || [];
+        const firstLineMsg = commits.length > 0
+          ? String(commits[commits.length - 1].message || "").split("\n")[0].trim()
+          : "";
+
+        const pushInfo = {
+          repoName: pushEvent.repo.name,
+          message: firstLineMsg,
+          createdAt: pushEvent.created_at
+        };
+
+        try {
+          sessionStorage.setItem(CACHE_KEY_EVENTS, JSON.stringify({ ts: Date.now(), data: pushInfo }));
+        } catch {}
+
+        renderEvent(pushInfo);
+      } catch {}
+    }
+
+    async function checkKotlinReleases() {
+      const kotlinRepos = allRepos.filter(r => !r.hidden && isKotlinRepo(r));
+      if (kotlinRepos.length === 0) return;
+
+      let savedReleases = {};
+      try {
+        const raw = sessionStorage.getItem(CACHE_KEY_RELEASES);
+        if (raw) {
+          const parsed = JSON.parse(raw);
+          if (Date.now() - parsed.ts < CACHE_TTL_MS) {
+            savedReleases = parsed.data || {};
+          }
+        }
+      } catch {}
+
+      let updatedAny = false;
+
+      await Promise.all(kotlinRepos.map(async (repo) => {
+        if (savedReleases[repo.rawName] && typeof savedReleases[repo.rawName].hasRelease === "boolean") {
+          repo.hasRelease = savedReleases[repo.rawName].hasRelease;
+          repo.releaseTag = savedReleases[repo.rawName].tag || "";
+          updatedAny = true;
+          return;
+        }
+
+        try {
+          const res = await fetch(`https://api.github.com/repos/${GITHUB_USERNAME}/${encodeURIComponent(repo.rawName)}/releases?per_page=1`);
+          if (!res.ok) {
+            repo.hasRelease = false;
+            repo.releaseTag = "";
+          } else {
+            const releases = await res.json();
+            if (Array.isArray(releases) && releases.length > 0) {
+              repo.hasRelease = true;
+              repo.releaseTag = releases[0].tag_name || "";
+            } else {
+              repo.hasRelease = false;
+              repo.releaseTag = "";
+            }
+          }
+        } catch {
+          repo.hasRelease = false;
+          repo.releaseTag = "";
+        }
+
+        savedReleases[repo.rawName] = { hasRelease: repo.hasRelease, tag: repo.releaseTag };
+        updatedAny = true;
+      }));
+
+      try {
+        sessionStorage.setItem(CACHE_KEY_RELEASES, JSON.stringify({ ts: Date.now(), data: savedReleases }));
+      } catch {}
+
+      if (updatedAny) {
+        kotlinRepos.forEach(repo => {
+          document.querySelectorAll(`[data-download-repo="${CSS.escape(repo.rawName)}"]`).forEach(cardBtn => {
+            if (repo.hasRelease) {
+              cardBtn.classList.remove("hidden");
+            } else {
+              cardBtn.classList.add("hidden");
+            }
+          });
+        });
+
+        const modal = document.getElementById("readme-modal");
+        const activeModalRepo = modal?.dataset?.activeRepo;
+        if (activeModalRepo && !modal.classList.contains("hidden")) {
+          const activeRepoObj = allRepos.find(r => r.rawName === activeModalRepo);
+          const modalDlBtn = document.getElementById("modal-download-btn");
+          const modalDlLabel = document.getElementById("modal-download-label");
+          if (activeRepoObj && modalDlBtn) {
+            if (isKotlinRepo(activeRepoObj) && activeRepoObj.hasRelease) {
+              modalDlBtn.href = activeRepoObj.releasesUrl;
+              if (modalDlLabel) {
+                modalDlLabel.textContent = activeRepoObj.releaseTag ? `Download ${activeRepoObj.releaseTag}` : "Download";
+              }
+              modalDlBtn.classList.remove("hidden");
+            } else {
+              modalDlBtn.classList.add("hidden");
+            }
+          }
+        }
+      }
     }
 
     function buildFilterPills() {
@@ -1005,19 +2046,24 @@
 
     function setFilter(filterId) {
       currentFilter = filterId;
+      setUrlHash(filterId === "ALL" ? "repos" : `repos/${encodeURIComponent(filterId.toLowerCase())}`);
       buildFilterPills();
       renderRepos();
     }
 
     function renderRepos() {
       const grid = document.getElementById("repo-grid");
+      const countLabel = document.getElementById("repo-filter-count");
       const query = document.getElementById("repo-search").value.trim().toLowerCase();
       const sortBy = document.getElementById("repo-sort").value;
 
-      let filtered = allRepos.filter(repo => {
+      const basePool = allRepos.filter(repo => {
         if (repo.hidden) return false;
         if (!showForksEnabled && repo.fork) return false;
+        return true;
+      });
 
+      let filtered = basePool.filter(repo => {
         if (currentFilter === "KOTLIN" && getCategoryForRepo(repo) !== "KOTLIN") return false;
         if (currentFilter === "TYPESCRIPT" && getCategoryForRepo(repo) !== "TYPESCRIPT") return false;
         if (currentFilter === "HTML" && getCategoryForRepo(repo) !== "HTML") return false;
@@ -1029,7 +2075,7 @@
         }
 
         if (query) {
-          const hay = `${repo.title} ${repo.rawName} ${repo.description} ${repo.language} ${repo.tag}`.toLowerCase();
+          const hay = `${repo.title} ${repo.rawName} ${repo.description} ${repo.language} ${repo.tag} ${repo.license}`.toLowerCase();
           if (!hay.includes(query)) return false;
         }
 
@@ -1042,9 +2088,15 @@
         return new Date(b.updatedAt) - new Date(a.updatedAt);
       });
 
+      if (countLabel) {
+        countLabel.textContent = filtered.length === basePool.length
+          ? `(${filtered.length})`
+          : `(${filtered.length} of ${basePool.length})`;
+      }
+
       if (filtered.length === 0) {
         grid.innerHTML = `
-          <div class="col-span-full surface-card rounded-xl p-10 text-center space-y-2">
+          <div class="col-span-full surface-card-static rounded-xl p-10 text-center space-y-2 view-enter">
             <p class="text-sm font-semibold text-white">No matching repositories</p>
             <p class="text-xs text-zinc-400">Try clearing your search or switching category filters.</p>
           </div>
@@ -1052,101 +2104,73 @@
         return;
       }
 
-      grid.innerHTML = filtered.map(repo => {
-        const updatedDate = new Date(repo.updatedAt).toLocaleDateString("en-US", {
-          year: "numeric",
-          month: "short",
-          day: "numeric"
-        });
-
-        const isHtmlRepo = getCategoryForRepo(repo) === "HTML" || repo.language.toLowerCase() === "html";
-        const showWebsiteBtn = (isHtmlRepo || repo.forceWebsiteBtn) && Boolean(repo.websiteUrl);
-
-        return `
-          <article onclick="openReadmeModal('${repo.rawName.replace(/'/g, "\\'")}')" class="surface-card rounded-xl p-5 flex flex-col justify-between gap-4 cursor-pointer group">
-            <div class="flex items-start gap-3.5">
-              ${getLanguageBadge(repo)}
-              <div class="min-w-0 flex-1">
-                <div class="flex items-center justify-between gap-2">
-                  <h3 class="text-base font-bold text-zinc-100 group-hover:text-white transition truncate">
-                    ${escapeHtml(repo.title)}
-                  </h3>
-                  <div class="flex items-center gap-1.5 shrink-0">
-                    ${repo.tag ? `<span class="text-[10px] font-mono-code px-2 py-0.5 rounded bg-[#27272a] border border-[#3f3f46] text-zinc-300">${escapeHtml(repo.tag)}</span>` : ""}
-                    ${repo.fork ? `<span class="text-[10px] font-mono-code px-2 py-0.5 rounded bg-[#202024] border border-[#2e2e34] text-zinc-400">Fork</span>` : ""}
-                  </div>
-                </div>
-                <p class="text-xs text-zinc-400 mt-1.5 line-clamp-2 leading-relaxed">
-                  ${escapeHtml(repo.description)}
-                </p>
-              </div>
-            </div>
-
-            <div class="pt-3 border-t border-[#27272a] flex items-center justify-between gap-2 text-xs font-mono-code text-zinc-400">
-              <div class="flex items-center gap-3 min-w-0">
-                <span class="text-zinc-300 truncate">${escapeHtml(repo.language)}</span>
-                <span>★ ${repo.stars}</span>
-                <span class="hidden sm:inline text-zinc-500">${updatedDate}</span>
-              </div>
-
-              <div class="flex items-center gap-3 shrink-0">
-                ${showWebsiteBtn ? `
-                  <a
-                    href="${repo.websiteUrl}"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    onclick="event.stopPropagation()"
-                    class="text-zinc-300 hover:text-white font-semibold inline-flex items-center gap-1 transition"
-                  >
-                    <span>Open Website</span>
-                    <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M7 7h10v10"/></svg>
-                  </a>
-                ` : ""}
-
-                <a
-                  href="${repo.htmlUrl}"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onclick="event.stopPropagation()"
-                  class="text-[#60a5fa] hover:text-white font-semibold inline-flex items-center gap-1 transition"
-                >
-                  <span>Open</span>
-                  <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M7 7h10v10"/></svg>
-                </a>
-              </div>
-            </div>
-          </article>
-        `;
-      }).join("");
+      grid.innerHTML = filtered.map((repo, idx) => buildRepoCardHtml(repo, idx)).join("");
     }
 
-    function navigateTo(view, filter = null) {
+    function retriggerViewAnimation(el) {
+      el.classList.remove("view-enter");
+      void el.offsetWidth;
+      el.classList.add("view-enter");
+    }
+
+    function navigateTo(view, filter = null, skipHashUpdate = false) {
       closeMobileMenu();
 
       const homeView = document.getElementById("view-home");
       const reposView = document.getElementById("view-repos");
+      const savedView = document.getElementById("view-saved");
+
       const navHome = document.getElementById("nav-home");
       const navRepos = document.getElementById("nav-repos");
+      const navSaved = document.getElementById("nav-saved");
+
       const mNavHome = document.getElementById("m-nav-home");
       const mNavRepos = document.getElementById("m-nav-repos");
+      const mNavSaved = document.getElementById("m-nav-saved");
+
+      const desktopInactive = "px-3 py-1.5 rounded-md text-xs font-medium transition duration-200 cursor-pointer text-zinc-400 hover:text-zinc-100";
+      const desktopActive = "px-3 py-1.5 rounded-md text-xs font-medium transition duration-200 cursor-pointer bg-[#27272a] text-white";
+      const mobileInactive = "w-full text-left px-3 py-2 rounded-md text-sm font-medium text-zinc-400 hover:bg-[#1f1f23] hover:text-white cursor-pointer";
+      const mobileActive = "w-full text-left px-3 py-2 rounded-md text-sm font-medium bg-[#27272a] text-white cursor-pointer";
+
+      currentView = view;
+
+      homeView.classList.add("hidden");
+      reposView.classList.add("hidden");
+      savedView.classList.add("hidden");
+
+      navHome.className = desktopInactive;
+      navRepos.className = desktopInactive;
+      navSaved.className = `${desktopInactive} inline-flex items-center gap-1.5`;
+
+      mNavHome.className = mobileInactive;
+      mNavRepos.className = mobileInactive;
+      mNavSaved.className = `${mobileInactive} flex items-center justify-between`;
 
       if (view === "home") {
         homeView.classList.remove("hidden");
-        reposView.classList.add("hidden");
-        navHome.className = "px-3 py-1.5 rounded-md text-xs font-medium transition cursor-pointer bg-[#27272a] text-white";
-        navRepos.className = "px-3 py-1.5 rounded-md text-xs font-medium transition cursor-pointer text-zinc-400 hover:text-zinc-100";
-        mNavHome.className = "w-full text-left px-3 py-2 rounded-md text-sm font-medium bg-[#27272a] text-white cursor-pointer";
-        mNavRepos.className = "w-full text-left px-3 py-2 rounded-md text-sm font-medium text-zinc-400 hover:bg-[#1f1f23] hover:text-white cursor-pointer";
+        retriggerViewAnimation(homeView);
+        navHome.className = desktopActive;
+        mNavHome.className = mobileActive;
+        if (!skipHashUpdate) setUrlHash("");
+      } else if (view === "saved") {
+        savedView.classList.remove("hidden");
+        retriggerViewAnimation(savedView);
+        navSaved.className = `${desktopActive} inline-flex items-center gap-1.5`;
+        mNavSaved.className = `${mobileActive} flex items-center justify-between`;
+        renderSavedView();
+        if (!skipHashUpdate) setUrlHash("saved");
       } else {
-        homeView.classList.add("hidden");
         reposView.classList.remove("hidden");
-        navRepos.className = "px-3 py-1.5 rounded-md text-xs font-medium transition cursor-pointer bg-[#27272a] text-white";
-        navHome.className = "px-3 py-1.5 rounded-md text-xs font-medium transition cursor-pointer text-zinc-400 hover:text-zinc-100";
-        mNavRepos.className = "w-full text-left px-3 py-2 rounded-md text-sm font-medium bg-[#27272a] text-white cursor-pointer";
-        mNavHome.className = "w-full text-left px-3 py-2 rounded-md text-sm font-medium text-zinc-400 hover:bg-[#1f1f23] hover:text-white cursor-pointer";
+        retriggerViewAnimation(reposView);
+        navRepos.className = desktopActive;
+        mNavRepos.className = mobileActive;
 
         if (filter) {
           currentFilter = filter;
+        }
+        if (!skipHashUpdate) {
+          setUrlHash(currentFilter === "ALL" ? "repos" : `repos/${encodeURIComponent(currentFilter.toLowerCase())}`);
         }
         buildFilterPills();
         renderRepos();
@@ -1154,8 +2178,8 @@
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
 
-    async function openReadmeModal(rawName) {
-      const repo = allRepos.find(r => r.rawName === rawName);
+    async function openReadmeModal(rawName, skipHashUpdate = false) {
+      const repo = allRepos.find(r => r.rawName.toLowerCase() === String(rawName).toLowerCase());
       if (!repo) return;
 
       const modal = document.getElementById("readme-modal");
@@ -1163,11 +2187,31 @@
       const subEl = document.getElementById("modal-repo-sub");
       const openBtn = document.getElementById("modal-open-btn");
       const websiteBtn = document.getElementById("modal-website-btn");
+      const downloadBtn = document.getElementById("modal-download-btn");
+      const downloadLabel = document.getElementById("modal-download-label");
       const contentEl = document.getElementById("modal-readme-content");
 
+      resetShareButtonUI();
+      resetCloneButtonUI();
+      updateModalSaveButtonUI(repo.rawName);
+      modal.dataset.activeRepo = repo.rawName;
       titleEl.textContent = repo.title;
       subEl.textContent = `${GITHUB_USERNAME}/${repo.rawName} • README.md`;
       openBtn.href = repo.htmlUrl;
+
+      if (!skipHashUpdate) {
+        setUrlHash(`repo/${encodeURIComponent(repo.rawName)}`);
+      }
+
+      if (isKotlinRepo(repo) && repo.hasRelease === true) {
+        downloadBtn.href = repo.releasesUrl;
+        if (downloadLabel) {
+          downloadLabel.textContent = repo.releaseTag ? `Download ${repo.releaseTag}` : "Download";
+        }
+        downloadBtn.classList.remove("hidden");
+      } else {
+        downloadBtn.classList.add("hidden");
+      }
 
       const isHtmlRepo = getCategoryForRepo(repo) === "HTML" || repo.language.toLowerCase() === "html";
       if ((isHtmlRepo || repo.forceWebsiteBtn) && repo.websiteUrl) {
@@ -1182,7 +2226,8 @@
 
       try {
         const res = await fetch(`https://api.github.com/repos/${GITHUB_USERNAME}/${encodeURIComponent(repo.rawName)}/readme`, {
-          headers: { Accept: "application/vnd.github.v3.raw" }
+          headers: { Accept: "application/vnd.github.v3.raw" },
+          cache: "no-store"
         });
 
         if (!res.ok) throw new Error("No README");
@@ -1199,8 +2244,89 @@
       }
     }
 
-    function closeReadmeModal() {
-      document.getElementById("readme-modal").classList.add("hidden");
+    function closeReadmeModal(skipHashUpdate = false) {
+      const modal = document.getElementById("readme-modal");
+      if (modal.classList.contains("hidden")) return;
+      modal.classList.add("hidden");
+      delete modal.dataset.activeRepo;
+      resetShareButtonUI();
+      resetCloneButtonUI();
+
+      if (!skipHashUpdate) {
+        if (currentView === "repos") {
+          setUrlHash(currentFilter === "ALL" ? "repos" : `repos/${encodeURIComponent(currentFilter.toLowerCase())}`);
+        } else if (currentView === "saved") {
+          setUrlHash("saved");
+        } else {
+          setUrlHash("");
+        }
+      }
+    }
+
+    function syncFromUrlHash() {
+      if (isSyncingHash) return;
+      const hash = window.location.hash.replace(/^#/, "").trim();
+
+      if (!hash) {
+        closeReadmeModal(true);
+        if (currentView !== "home") navigateTo("home", null, true);
+        return;
+      }
+
+      if (hash.toLowerCase() === "saved") {
+        closeReadmeModal(true);
+        if (currentView !== "saved") navigateTo("saved", null, true);
+        return;
+      }
+
+      if (hash.toLowerCase().startsWith("repo/")) {
+        const repoSlug = decodeURIComponent(hash.slice(5));
+        const repo = allRepos.find(r => r.rawName.toLowerCase() === repoSlug.toLowerCase());
+        if (repo) {
+          if (repo.fork && !showForksEnabled) {
+            showForksEnabled = true;
+            updateForksButtonUI();
+          }
+          if (currentView !== "repos") {
+            navigateTo("repos", "ALL", true);
+          }
+          openReadmeModal(repo.rawName, true);
+        }
+        return;
+      }
+
+      if (hash.toLowerCase() === "repos" || hash.toLowerCase().startsWith("repos/")) {
+        closeReadmeModal(true);
+        const sub = hash.slice(6);
+        if (!sub) {
+          navigateTo("repos", "ALL", true);
+        } else {
+          const decoded = decodeURIComponent(sub);
+          const upper = decoded.toUpperCase();
+          if (["ALL", "KOTLIN", "TYPESCRIPT", "HTML", "PYTHON", "OTHER"].includes(upper)) {
+            navigateTo("repos", upper, true);
+          } else if (decoded.toLowerCase().startsWith("lang:")) {
+            navigateTo("repos", `LANG:${decoded.slice(5)}`, true);
+          } else {
+            navigateTo("repos", "ALL", true);
+          }
+        }
+      }
+    }
+
+    function copyReadmeCodeBlock(btn) {
+      const codeEl = btn.parentElement?.querySelector("code");
+      if (!codeEl) return;
+      copyTextToClipboard(codeEl.textContent || "").then(() => {
+        btn.textContent = "Copied";
+        btn.style.color = "#34d399";
+        btn.style.borderColor = "rgba(52, 211, 153, 0.4)";
+        setTimeout(() => {
+          btn.textContent = "Copy";
+          btn.style.color = "";
+          btn.style.borderColor = "";
+        }, 1400);
+      });
     }
 
     function parseMarkdownTables(text) {
@@ -1271,7 +2397,9 @@
       const codeBlocks = [];
       let raw = md.replace(/```([\w-]*)\n?([\s\S]*?)```/g, (_, lang, code) => {
         const placeholder = `@@CODEBLOCK_${codeBlocks.length}@@`;
-        codeBlocks.push(`<pre><code>${escapeHtml(code.trim())}</code></pre>`);
+        codeBlocks.push(
+          `<div class="code-block-wrap"><button type="button" onclick="copyReadmeCodeBlock(this)" class="code-copy-btn">Copy</button><pre><code>${escapeHtml(code.trim())}</code></pre></div>`
+        );
         return placeholder;
       });
 
@@ -1286,7 +2414,16 @@
         return `<img src="${cleanSrc}" alt="${alt}" />`;
       });
 
-      html = html.replace(/\[([^\]]+)\]\((https?:\/\/[^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>');
+      html = html.replace(/\[([^\]]+)\]\(([^)]+)\)/g, (_, label, href) => {
+        if (/^https?:\/\//i.test(href)) {
+          return `<a href="${href}" target="_blank" rel="noopener noreferrer">${label}</a>`;
+        }
+        if (href.startsWith("#")) {
+          return `<a href="${href}" onclick="event.preventDefault();">${label}</a>`;
+        }
+        const resolvedUrl = `https://github.com/${GITHUB_USERNAME}/${repoName}/blob/${branch}/${href.replace(/^\.?\//, "")}`;
+        return `<a href="${resolvedUrl}" target="_blank" rel="noopener noreferrer">${label}</a>`;
+      });
 
       html = html.replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>");
       html = html.replace(/\*([^*]+)\*/g, "<em>$1</em>");
@@ -1337,7 +2474,12 @@
 
     function triggerLightModeError() {
       closeMobileMenu();
-      document.getElementById("light-error-overlay").classList.remove("hidden");
+      const overlay = document.getElementById("light-error-overlay");
+      const card = document.getElementById("light-error-card");
+      overlay.classList.remove("hidden");
+      card.classList.remove("error-shake");
+      void card.offsetWidth;
+      card.classList.add("error-shake");
     }
 
     function closeLightModeError() {
@@ -1352,34 +2494,101 @@
         .replace(/"/g, "&quot;");
     }
 
+    function applyRepoData(data, fromStaleCache = false) {
+      if (data.length > 0 && data[0].owner && data[0].owner.avatar_url) {
+        const heroAvatar = document.getElementById("hero-avatar");
+        if (heroAvatar) heroAvatar.src = data[0].owner.avatar_url;
+      }
+
+      const cacheBadge = document.getElementById("cache-status-badge");
+      if (cacheBadge) {
+        if (fromStaleCache) {
+          cacheBadge.classList.remove("hidden");
+        } else {
+          cacheBadge.classList.add("hidden");
+        }
+      }
+
+      allRepos = data.map(normalizeRepo);
+      updateHomeSections();
+      buildFilterPills();
+      renderRepos();
+      renderSavedView();
+      checkKotlinReleases();
+      fetchLatestPushEvent();
+      syncFromUrlHash();
+    }
+
     async function fetchRepositories() {
+      updateSavedCounters();
+
       const grid = document.getElementById("repo-grid");
-      grid.innerHTML = `<div class="col-span-full text-xs font-mono-code text-zinc-400">Fetching repositories from GitHub...</div>`;
+      grid.innerHTML = Array.from({ length: 4 }).map(() => `
+        <div class="surface-card-static rounded-xl p-5 space-y-4 animate-pulse">
+          <div class="flex items-start gap-3.5">
+            <div class="w-10 h-10 rounded-lg bg-[#202024] border border-[#2e2e34] shrink-0"></div>
+            <div class="flex-1 space-y-2 pt-0.5">
+              <div class="h-4 w-36 bg-[#202024] rounded"></div>
+              <div class="h-3 w-full bg-[#202024] rounded"></div>
+            </div>
+          </div>
+          <div class="pt-3 border-t border-[#27272a] flex justify-between">
+            <div class="h-3 w-24 bg-[#202024] rounded"></div>
+            <div class="h-3 w-12 bg-[#202024] rounded"></div>
+          </div>
+        </div>
+      `).join("");
+
+      let staleBackup = null;
+
+      try {
+        const cachedRaw = sessionStorage.getItem(CACHE_KEY_REPOS);
+        if (cachedRaw) {
+          const cached = JSON.parse(cachedRaw);
+          if (Date.now() - cached.ts < CACHE_TTL_MS && Array.isArray(cached.data)) {
+            applyRepoData(cached.data, false);
+            return;
+          }
+        }
+      } catch {}
+
+      try {
+        const localRaw = localStorage.getItem(CACHE_KEY_REPOS);
+        if (localRaw) {
+          const parsedLocal = JSON.parse(localRaw);
+          if (Array.isArray(parsedLocal.data)) {
+            staleBackup = parsedLocal.data;
+          }
+        }
+      } catch {}
 
       try {
         const res = await fetch(`https://api.github.com/users/${GITHUB_USERNAME}/repos?sort=updated&per_page=100`);
         if (!res.ok) throw new Error("GitHub API error");
         const data = await res.json();
 
-        if (data.length > 0 && data[0].owner && data[0].owner.avatar_url) {
-          const heroAvatar = document.getElementById("hero-avatar");
-          if (heroAvatar) heroAvatar.src = data[0].owner.avatar_url;
+        const payload = JSON.stringify({ ts: Date.now(), data });
+        try { sessionStorage.setItem(CACHE_KEY_REPOS, payload); } catch {}
+        try { localStorage.setItem(CACHE_KEY_REPOS, payload); } catch {}
+
+        applyRepoData(data, false);
+      } catch {
+        if (staleBackup && staleBackup.length > 0) {
+          applyRepoData(staleBackup, true);
+          return;
         }
 
-        allRepos = data.map(normalizeRepo);
-        updateHomeCounters();
-        buildFilterPills();
-        renderRepos();
-      } catch {
         document.getElementById("home-total-count").textContent = "GitHub API unavailable";
         grid.innerHTML = `
-          <div class="col-span-full surface-card rounded-xl p-6 text-center space-y-2">
+          <div class="col-span-full surface-card-static rounded-xl p-6 text-center space-y-2">
             <p class="text-sm font-semibold text-white">Could not load repositories</p>
             <p class="text-xs text-zinc-400">GitHub API rate limit reached or offline. Visit <a href="https://github.com/${GITHUB_USERNAME}" target="_blank" class="text-[#60a5fa] underline">github.com/${GITHUB_USERNAME}</a>.</p>
           </div>
         `;
       }
     }
+
+    window.addEventListener("hashchange", syncFromUrlHash);
 
     window.addEventListener("resize", () => {
       if (window.innerWidth >= 768) {
@@ -1388,8 +2597,24 @@
     });
 
     document.addEventListener("keydown", e => {
+      if (e.key === "/" && !["INPUT", "TEXTAREA", "SELECT"].includes(document.activeElement?.tagName)) {
+        e.preventDefault();
+        if (currentView !== "repos") {
+          jumpToRepoSearch();
+        } else {
+          document.getElementById("repo-search")?.focus();
+        }
+      }
+
       if (e.key === "Escape") {
+        const searchInput = document.getElementById("repo-search");
+        if (document.activeElement === searchInput && searchInput.value) {
+          searchInput.value = "";
+          renderRepos();
+          return;
+        }
         closeMobileMenu();
+        closeSaveModal();
         closeReadmeModal();
         closeBugModal();
         closeLightModeError();
@@ -1402,4 +2627,3 @@
   </script>
 </body>
 </html>
-
